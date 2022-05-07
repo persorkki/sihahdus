@@ -1,0 +1,139 @@
+.App {
+  margin: 1em auto;
+  width: 75%;
+}
+.perspiraatti-title {
+  font-size: 3em;
+  font-weight: bold;
+  text-align: center;
+  margin: 0.5em auto;
+  color: #ffb049e0;
+}
+.links {
+  display: flex;
+  
+  margin: 1em auto;
+  background-color: #212430;
+  justify-content:space-evenly;
+  font-size: 1.5em;
+}
+
+a{
+  color: #ffb049e0;
+  text-decoration: none;
+}
+.gems-search-input {  
+  width: 50%;
+  display: block;
+  margin: 0 auto;
+  font-size: 2em;
+  border: none;
+  
+}
+
+.gems-container{
+  margin-top: 1em;
+  margin-bottom: 1em;
+  
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  
+  grid-auto-rows: 1fr;
+  grid-gap: 10px;
+  
+}
+.gem-card {
+  background-color: #26282e;
+  color: rgb(250, 250, 250);
+  border: 1px solid rgb(255, 191, 132);
+  border-radius: 5px;
+  padding: 0.25em;
+}
+.gem-name{
+  /* align vertically center */
+  font-size: 1em;
+  font-weight: bold;
+  text-align: center;
+  margin: 0 auto;
+}
+.gem-effect {
+  /* align vertically center */
+  font-size: 0.8em;
+  text-align: center;
+  margin: 0 auto;
+  font-style: italic;
+  font-size: 1em;
+  color: #ffb049;
+}
+.gem-icon{
+  width: 2em;
+  height: 2em;
+  margin: 0 auto;
+}
+.gem-weight {
+  text-align: end;  
+  margin: 0 auto;
+  font-size: 0.8em;
+  color:#ffffff
+} 
+
+
+button {
+  font-size: large;
+  border: none;  
+  width: 100%;
+  height: 4em;
+}
+
+/* Normal */
+button#normal {
+  background-color: #53ad2a;
+  color: white;
+}
+button#normal:hover {
+  background-color: #8e9c92;
+}
+
+/* Cruel */
+button#cruel {
+  background-color: #2b4bb4;
+  color: white;
+}
+button#cruel:hover {
+  background-color: #766f94;
+}
+
+/* Merciless */
+button#merciless {
+  background-color: #b4792b;
+  color: white;
+}
+button#merciless:hover {
+  background-color: #b49d7f;
+}
+
+/* Uber */
+button#uber {
+  background-color: #812d2d;
+  color: white;
+}
+button#uber:hover {
+  background-color: #835f5f;
+}
+
+
+.lab-image {
+  grid-column-start: 1;
+  grid-column-end: 5;
+  max-width: 100%;
+}
+.lab-image:active {
+  transform: scale(1.3);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-gap: 10px;
+  margin: 0 auto;
+}
