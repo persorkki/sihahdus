@@ -4,14 +4,7 @@ import { ImageViewer } from './components/ImageViewer'
 import { GemSearch } from './components/Gems';
 
 function App() {
-  /*
-  const images = [
-    require("normal.jpg"),
-    require("cruel.jpg"),
-    require("merciless.jpg"),
-    require("uber.jpg"),
-  ]
-  */
+
   const images = [
     "normal.jpg",
     "cruel.jpg",
@@ -25,7 +18,6 @@ function App() {
   }
 
   return (
-
     <div className="App">
       <div className="perspiraatti-title">Perspiraatti</div>
       <Links/>
@@ -39,7 +31,7 @@ function Links() {
     <div className="links">
       <a href="https://poedb.tw/us/mod.php">PoeDB Mods</a>
       
-      <a href="https://www.pathofexile.com/forum/view-thread/3229187">3.17.0 Patchnotes</a>
+      <a href="https://www.pathofexile.com/forum/view-thread/3264788">3.18.0 patchnotes</a>
       
       <a href="https://gggtracker.com/">GGG Tracker</a>
       
