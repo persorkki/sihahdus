@@ -1,6 +1,7 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import { Home, Album } from './components/Home';
+import { Home } from './components/Home';
+import { Album } from "./components/Album";
 
 function App() {
 

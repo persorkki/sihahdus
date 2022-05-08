@@ -77,12 +77,15 @@ a{
   color:#ffffff
 } 
 
-
 button {
   font-size: large;
   border: none;  
   width: 100%;
   height: 4em;
+}
+button:hover {
+  background-color: #ffb049;
+  color: #ffffff;
 }
 
 /* Normal */
@@ -136,4 +139,35 @@ button#uber:hover {
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   grid-gap: 10px;
   margin: 0 auto;
+}
+.album {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0 auto;
+}
+.album button{
+  width: 50%;
+  background-color: #812d2d;
+  
+}
+.album button:hover {
+  background-color: #835f5f;
+}
+.album input{
+  width: 50%;
+  margin: 0 auto;
+}
+
+.image-area{
+  margin-top: 1em;
+  display: grid;
+  grid-gap: 0em;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+}
+
+.thumb-button{
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
 }
