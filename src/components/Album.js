@@ -34,14 +34,16 @@ export function Album() {
   return (
     <>
       <div className="album">
-        <input autofocus onInput={e => setSearchValue(e.target.value)}  className="gems-search-input" placeholder="artist/album name here"></input>
+        <form className="album">
+        <input autoFocus onInput={e => setSearchValue(e.target.value)}  className="gems-search-input" placeholder="artist/album name here"></input>
         <select onChange={handleRegion}>
           <option selected value="us">United States</option>
           <option value="fi">Finland</option>
           <option value="jp">Japan</option>
           <option value="uk">United Kingdom</option>
 	      </select>
-        <button className="album-search-btn" onClick={handleSubmit}>aa</button>
+          <button type="submit" className="album-search-btn" onClick={handleSubmit}>aa</button>
+          </form>
 
       </div>
       <div className="image-area">

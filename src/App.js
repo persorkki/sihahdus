@@ -2,6 +2,7 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom';
 import { Home } from './components/Home';
 import { Album } from "./components/Album";
+import { BrowserRouter } from 'react-router-dom';
 
 function App() {
 
