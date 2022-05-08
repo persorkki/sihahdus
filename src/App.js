@@ -1,41 +1,23 @@
 import './App.css';
-import { useState } from 'react';
-import { ImageViewer } from './components/ImageViewer'
-import { GemSearch } from './components/Gems';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { Home, Album } from './components/Home';
 
 function App() {
-
-  const images = [
-    "normal.jpg",
-    "cruel.jpg",
-    "merciless.jpg",
-    "uber.jpg"
-  ]
-  const [currentImage, setCurrentImage] = useState(3);
-
-  const handleClick = (index) => {
-    setCurrentImage(index);
-  }
 
   return (
     <div className="App">
       <div className="perspiraatti-title">Perspiraatti</div>
-      <Links/>
-      <GemSearch />
-      <ImageViewer handleClick={handleClick} currentImage={`../lab/${images[currentImage]}`} />
+      <Router>
+        <div className="links"> 
+          <Link to="/">Home</Link>
+          <Link to="/album">Album</Link>
+        </div>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/album" element={<Album />} />
+        </Routes>
+      </Router>
    </div>
-  );
-}
-function Links() {
-  return (
-    <div className="links">
-      <a href="https://poedb.tw/us/mod.php">PoeDB Mods</a>
-      
-      <a href="https://www.pathofexile.com/forum/view-thread/3264788">3.18.0 patchnotes</a>
-      
-      <a href="https://gggtracker.com/">GGG Tracker</a>
-      
-    </div>
   );
 }
 export default App;
