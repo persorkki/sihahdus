@@ -9,17 +9,32 @@
   margin: 0.5em auto;
   color: #ffb049e0;
 }
+
+.perspiraatti-title img {
+  width: .5em;
+}
+
 .links {
   display: flex;
-  
   margin: 1em auto;
-  background-color: #212430;
   justify-content:space-evenly;
   font-size: 1.5em;
 }
 
+.links a {
+  color: hsla(204, 100%, 72%, 0.878);
+}
+.navlinks {
+  display: flex;
+  margin: 1em auto;
+  padding: 0.25em;
+  background-color: #212430;
+  justify-content:space-between;
+  font-size: 1.5em;
+  font-weight: bold;
+  border-radius: 0.15em;
+}
 a{
-  color: #ffb049e0;
   text-decoration: none;
 }
 .gems-search-input {  
@@ -79,9 +94,11 @@ a{
 
 button {
   font-size: large;
+  border-radius: 0.15em;
   border: none;  
   width: 100%;
   height: 4em;
+  font-weight: bold;
 }
 button:hover {
   background-color: #ffb049;
@@ -90,38 +107,43 @@ button:hover {
 
 /* Normal */
 button#normal {
-  background-color: #53ad2a;
+  background-color: #8b9bda;
   color: white;
 }
+
 button#normal:hover {
-  background-color: #8e9c92;
+  background-color: #ffffff;
+  color:rgba(155, 106, 43, 0.88)
 }
 
 /* Cruel */
 button#cruel {
-  background-color: #2b4bb4;
+  background-color: #586186;
   color: white;
 }
 button#cruel:hover {
-  background-color: #766f94;
+  background-color: #ffffff;
+  color:rgba(155, 106, 43, 0.88);
 }
 
 /* Merciless */
 button#merciless {
-  background-color: #b4792b;
+  background-color: #373d52;
   color: white;
 }
 button#merciless:hover {
-  background-color: #b49d7f;
+  background-color: #ffffff;
+  color:rgba(155, 106, 43, 0.88);
 }
 
 /* Uber */
 button#uber {
-  background-color: #812d2d;
+  background-color: #212430;
   color: white;
 }
 button#uber:hover {
-  background-color: #835f5f;
+  background-color: #ffffff;
+  color:rgba(155, 106, 43, 0.88);
 }
 
 
@@ -142,20 +164,24 @@ button#uber:hover {
 }
 .album {
   display: flex;
-  justify-content: space-between;
-  width: 100%;
-  margin: 0 auto;
+
+  margin: 1em auto;
 }
+
 .album button{
-  width: 50%;
+  color: white;
+  width: 25%;
   background-color: #812d2d;
-  
+}
+.album select{
+
+  width: 25%;
 }
 .album button:hover {
   background-color: #835f5f;
 }
 .album input{
-  width: 50%;
+  width:50%;
   margin: 0 auto;
 }
 
@@ -167,7 +193,9 @@ button#uber:hover {
 }
 
 .thumb-button{
-  width: 100%;
+  text-decoration: none;
+	background-color: transparent;
   margin: 0 auto;
   padding: 0;
 }
+
