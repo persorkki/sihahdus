@@ -33,19 +33,19 @@ export function Album() {
 
   return (
     <>
-      <div className="album">
+      
         <form className="album">
-        <input autoFocus onInput={e => setSearchValue(e.target.value)}  className="gems-search-input" placeholder="artist/album name here"></input>
-        <select onChange={handleRegion}>
-          <option selected value="us">United States</option>
-          <option value="fi">Finland</option>
-          <option value="jp">Japan</option>
-          <option value="uk">United Kingdom</option>
-	      </select>
+          <input autoFocus onInput={e => setSearchValue(e.target.value)}  className="gems-search-input" placeholder="artist/album name here"></input>
+          <select onChange={handleRegion}>
+            <option selected value="us">United States</option>
+            <option value="uk">United Kingdom</option>
+            <option value="fi">Finland</option>
+            <option value="jp">Japan</option>
+	        </select>
           <button type="submit" className="album-search-btn" onClick={handleSubmit}>aa</button>
-          </form>
+        </form>
 
-      </div>
+      
       <div className="image-area">
         {albumCovers.map((album, i) => {
         return (
