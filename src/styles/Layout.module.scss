@@ -1,0 +1,11 @@
+@import "./variables.scss";
+
+.content {
+    margin: 0 auto;
+    /*margin-top: 4em;*/
+    width: 50%;
+
+    @media screen and (max-width: $mobile-screen-size) {
+        width: 90%;
+    }
+}

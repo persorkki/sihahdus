@@ -30,3 +30,7 @@ yarn-error.log*
 
 # vercel
 .vercel
+/public
+/.vs
+
+src/styles/oldc.css

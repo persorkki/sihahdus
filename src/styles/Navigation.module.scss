@@ -1,0 +1,118 @@
+@import "./variables.scss";
+
+@mixin bottom-list-gap {
+    /* maybe some kind of separator for mobile view */
+}
+
+$nav-text-color: $color-bg;
+
+.navbar {
+    color: $nav-text-color;
+    background-color: $color-accent;
+    letter-spacing: 0.08em;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.5em;
+    @media screen and (max-width: $mobile-screen-size) { 
+        flex-direction: column-reverse;
+    }
+    
+    ul {
+        display: flex;
+        list-style: none;
+
+        @media screen and (max-width: $mobile-screen-size) { 
+            text-align: center;
+            flex-direction: column;
+        }
+        
+        img {
+            display: none;
+            vertical-align: middle;
+            /*filter: invert(16%) sepia(92%) saturate(2888%) hue-rotate(349deg) brightness(87%) contrast(113%);*/
+            /*filter: invert(82%) sepia(79%) saturate(538%) hue-rotate(355deg) brightness(98%) contrast(90%);*/
+            filter: invert(57%) sepia(65%) saturate(4884%) hue-rotate(163deg) brightness(96%) contrast(103%);
+            /*filter: brightness(0) invert(1);*/
+        }
+        .current {
+            position:relative;
+            /* TEMPORARY FOR TESTING ONLY */
+            @mixin content-setup {
+                color: $color-special;
+                letter-spacing: 0.08em;
+                /* vertical-align: middle; */
+            }
+            li::before {
+                
+                @include content-setup;
+                font-weight: 500;
+                content: "{";
+                position: absolute;
+                left: 8px;
+                
+            }
+            li::after {
+                @include content-setup;
+                font-weight: 500;
+                content: "}";
+                position: absolute;
+                right: 8px;
+            }
+
+            @media screen and (max-width: $mobile-screen-size) { 
+                li::before {
+                    @include content-setup;
+                    font-weight: 500;
+                    content: "{";
+                    position: relative;
+                    left: -8px;
+                }
+                li::after {
+                    @include content-setup;
+                    font-weight: 500;
+                    content: "}";
+                    position: relative;
+                    right: -8px;
+                }
+            }
+        }
+    }
+
+    ul li {
+        @include bottom-list-gap;
+        padding: $desktop-padding;
+
+        &:hover {
+            color: $color-fg;
+            background-color: $color-bg;
+        }
+
+        @media screen and (max-width: $mobile-screen-size) { 
+            padding: $mobile-padding;
+        }
+    }
+    .noaccess {
+        display: none;
+    }
+
+    .access {
+        color: $color-logged;
+    }
+    .login {
+        @include bottom-list-gap;
+        padding: $desktop-padding;  
+        background-color: $color-special;
+        text-align: center;
+        &:hover {
+            background-color: $color-bg;
+            color: $color-special;
+        }
+
+        @media screen and (max-width: $mobile-screen-size) { 
+            text-align: center;
+            width: 100%;
+            padding: $mobile-padding;
+        }
+
+    }
+}

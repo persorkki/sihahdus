@@ -1,0 +1,30 @@
+@import './variables.scss';
+
+.content {
+    color: $color-bg;
+    background-color: $color-accent;
+    
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    
+    height: 20px;
+    display: flex;
+    justify-content: space-between;
+    a {
+        /* color: $color-special; */
+        text-decoration: underline;
+
+        &::before {
+            content: " ";
+        }
+        &::after {
+            content: " ";
+        }
+
+    }
+    @media screen and (max-width: $mobile-screen-size) {
+        /* display: none; */
+    }
+}

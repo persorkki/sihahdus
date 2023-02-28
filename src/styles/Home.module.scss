@@ -1,0 +1,46 @@
+@import "./variables.scss";
+
+
+@mixin highlight-round-border {
+    padding-left:  6px;
+    padding-right: 6px;
+    border: 1px outset $color-special;
+    border-radius: 1.5em;
+}
+
+@mixin highlight-span {
+    color: $color-special;
+}
+
+.content {
+    text-align:justify;
+    margin-top: 1.5em;
+    h1 {
+        text-align: left;
+        font-size: 2.1em;
+    }
+    h2 {
+        text-align: right;
+        
+        font-weight: 500;
+        font-size: 1.6em;
+        margin-top: 0.5em;
+    }
+    p {
+        font-size: 1.1em;
+        line-height: 1.4em;
+        margin-bottom: 1em;
+        margin-top: 1.5em;
+
+    }
+    span {
+        @include highlight-span;
+    }
+
+    .title {
+        span {
+            @include highlight-span;
+            color: $color-logged;
+        }
+    }
+}

@@ -1,0 +1,38 @@
+@import "./variables.scss";
+
+.gallery {
+    width: 100vw;
+    margin-left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1em;
+    
+    img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    @media screen and (max-width: $mobile-screen-size) { 
+        gap:6px;
+    }
+}
+
+.image {
+    flex: 1 0 20%;
+    max-width: 20%;
+    @media screen and (max-width: $mobile-screen-size) { 
+        flex: 1 0 100%;
+        max-width: 100%;
+    }
+}
+
+.content {
+    text-align: center;
+}
+
