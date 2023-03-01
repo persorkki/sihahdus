@@ -8,6 +8,6 @@ export default function ProtectedLink({ session, route, checkLoggedIn, checkRout
                     {children}
                 </li>
             </Link>
-        </>
+        </> 
     )
 }
