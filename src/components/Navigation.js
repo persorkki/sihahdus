@@ -4,6 +4,9 @@ import styles from '../styles/Navigation.module.scss'
 
 import Link from 'next/link'
 import Image from 'next/image'
+
+import ProtectedLink from './Navigation/ProtectedLink'
+
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 
@@ -27,16 +30,16 @@ function Navigation({ children, href }) {
 
                 <Link className={checkRoute("/")} href="/" passHref>
                     <li>
-                        home.
+                        home
                     </li>
                 </Link>
                 <Link className={checkRoute("/gallery")} href="/gallery">
                     <li>
-                        gallery.
+                        gallery
                     </li>
                 </Link>
-                <ProtectedLink session={session} route="/configure" checkLoggedIn={checkLoggedIn} checkRoute={checkRoute}>configure.</ProtectedLink>
-                <ProtectedLink session={session} route="/upload" checkLoggedIn={checkLoggedIn} checkRoute={checkRoute}>upload.</ProtectedLink>
+                <ProtectedLink session={session} route="/configure" checkLoggedIn={checkLoggedIn} checkRoute={checkRoute}>configure</ProtectedLink>
+                <ProtectedLink session={session} route="/upload" checkLoggedIn={checkLoggedIn} checkRoute={checkRoute}>upload</ProtectedLink>
             </ul>
             {/* 
                 Maybe extract this login button into a component 
@@ -57,15 +60,3 @@ function Navigation({ children, href }) {
 }
 
 export { Navigation }
-
-function ProtectedLink({session,  route, checkLoggedIn, checkRoute, children}) {
-    return (
-        <>
-            <Link className={`${checkLoggedIn(session)} ${checkRoute(route)}`} href={route}>
-                <li>
-                    {children}
-                </li>
-            </Link>
-        </>
-    )
-}
