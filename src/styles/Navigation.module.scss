@@ -78,7 +78,6 @@ $nav-text-color: $color-bg;
     }
 
     ul li {
-        @include bottom-list-gap;
         padding: $desktop-padding;
 
         &:hover {
@@ -87,17 +86,17 @@ $nav-text-color: $color-bg;
         }
 
         @media screen and (max-width: $mobile-screen-size) { 
+            @include bottom-list-gap;
             padding: $mobile-padding;
         }
     }
     .noaccess {
         color: rgb(36, 36, 36);
         text-decoration:line-through;
-        
+        display: none;
     }
 
     .access {
-        color: $color-logged;
         text-decoration: none;
     }
     .login {
@@ -115,6 +114,5 @@ $nav-text-color: $color-bg;
             width: 100%;
             padding: $mobile-padding;
         }
-
     }
 }
