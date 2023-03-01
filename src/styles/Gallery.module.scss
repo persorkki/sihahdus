@@ -14,8 +14,10 @@
     
     img {
         display: block;
-        width: 100%;
-        height: auto;
+
+        width:4em;
+        height:8em;
+        object-fit: cover;
     }
 
     @media screen and (max-width: $mobile-screen-size) { 
@@ -25,11 +27,15 @@
 
 .image {
     flex: 1 0 20%;
+    width: 20%;
     max-width: 20%;
+    
     @media screen and (max-width: $mobile-screen-size) { 
         flex: 1 0 100%;
         max-width: 100%;
+        
     }
+    
 }
 
 .content {

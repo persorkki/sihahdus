@@ -14,6 +14,11 @@ import gallery_template_image8 from "../../public/car.jpg"
 import gallery_template_image9 from "../../public/blackknight.png"
 
 export default function Gallery() {
+  const copyImageToClipboard = (target) => {
+    navigator.clipboard.writeText(target);
+    console.log(target)
+  }
+
   return (
     <>
       <Head>
@@ -34,7 +39,7 @@ export default function Gallery() {
                     maybe sort images by aspect ratio to make it look good?
                     or just force them into one size and cover fit
                   */ }
-                  <Image className={styles.image} src={gallery_template_image} alt="1" />
+          <Image onClick={() => { copyImageToClipboard(gallery_template_image2) } } className={styles.image} src={gallery_template_image} alt="1" />
                   <Image className={styles.image} src={gallery_template_image2} alt="2" />
                   <Image className={styles.image} src={gallery_template_image3} alt="2" />
                   <Image className={styles.image} src={gallery_template_image4} alt="2" />

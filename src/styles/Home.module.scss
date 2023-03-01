@@ -40,7 +40,7 @@
     .title {
         span {
             @include highlight-span;
-            color: $color-logged;
+            color: $color-special;
         }
     }
 }

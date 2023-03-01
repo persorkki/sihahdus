@@ -43,7 +43,6 @@ $nav-text-color: $color-bg;
                 /* vertical-align: middle; */
             }
             li::before {
-                
                 @include content-setup;
                 font-weight: 500;
                 content: "{";
@@ -92,11 +91,14 @@ $nav-text-color: $color-bg;
         }
     }
     .noaccess {
-        display: none;
+        color: rgb(36, 36, 36);
+        text-decoration:line-through;
+        
     }
 
     .access {
         color: $color-logged;
+        text-decoration: none;
     }
     .login {
         @include bottom-list-gap;

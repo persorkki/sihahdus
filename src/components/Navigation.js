@@ -5,8 +5,12 @@ import styles from '../styles/Navigation.module.scss'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
 
-function Navigation({children, href}) {
+function Navigation({ children, href }) {
+    
+    const [session, setSession] = useState(false);
+
     const router = useRouter();
     
     const checkRoute = (path) => {
@@ -17,7 +21,11 @@ function Navigation({children, href}) {
         return !session ? styles.noaccess : styles.access;
     }
 
-    const session = true;
+    const login = () => {
+        setSession(!session);
+    }
+
+    //const session = false;
 
     return (
         <nav className={styles.navbar}>
@@ -55,9 +63,11 @@ function Navigation({children, href}) {
                 would be more clean. It has to change the background color which links dont do
                 so it's different from them. also needs to change title from login to logged in
                 <Login session={session}/>
+
+                TODO: add logged in button style
             */}
-            <Link href="#">
-                <div className={styles.login} >
+            <Link onClick={login} href="#">
+                <div className={styles.login}>
                     login
                 </div>
             </Link>
