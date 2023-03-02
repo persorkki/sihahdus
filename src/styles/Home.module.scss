@@ -43,4 +43,24 @@
             color: $color-special;
         }
     }
+    
+    .tooltip {
+        position: relative;
+        display: inline-block;
+      }
+      
+    .tooltip:hover::after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px; /* set the width of the tooltip */
+        height: 100px; /* set the height of the tooltip */
+        background-image: url("/public/sihahdus.svg"); /* set the background image */
+        background-size: cover;
+        background-position: center;
+    }
+    
 }

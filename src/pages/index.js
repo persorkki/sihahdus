@@ -15,7 +15,7 @@ export default function Home() {
       <main className={styles.content}>
         <h1 className={styles.title}>Hey, <span>you!</span></h1>
         <h2>...welcome</h2>
-        <p><span className={styles.highlight}>Sihahdus</span> is a simple file sharing and streaming server for personal use. You are welcome to explore the gallery, but uploading and configuration requires authorization.</p>
+        <p><span className={`${styles.highlight} ${styles.tooltip}`} title="">Sihahdus</span> is a simple file sharing and streaming server for personal use. You are welcome to explore the gallery, but uploading and configuration requires authorization.</p>
         <p>This site is a work in progress and might go down at any time for any reason. </p>
       </main>
     </>

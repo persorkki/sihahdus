@@ -3,23 +3,36 @@ import Image from 'next/image'
 import home from '../styles/Home.module.scss'
 import styles from '../styles/Gallery.module.scss'
 
-import gallery_template_image from "../../public/fist.gif"
-import gallery_template_image2 from "../../public/billy.gif"
-import gallery_template_image3 from "../../public/kino.gif"
-import gallery_template_image4 from "../../public/fleda.gif"
-import gallery_template_image5 from "../../public/paddington.gif"
-import gallery_template_image6 from "../../public/5.gif"
-import gallery_template_image7 from "../../public/laalalaa.gif"
-import gallery_template_image8 from "../../public/car.jpg"
-import gallery_template_image9 from "../../public/blackknight.png"
+import { readdir } from 'node:fs/promises';
 
-export default function Gallery() {
+export async function getServerSideProps() {
+  //const fs = require('fs')
+  const folderPath = 'G:/code/web/sihahdus-necro/public/';
+  let imageData = [];
+  try {
+    const files = await readdir(folderPath);
+    imageData = files;
+  }
+  catch (err) {
+    console.log(err);
+  }
+  return {
+    props: { imageData },
+  }
+}
+
+export default function Gallery({ imageData }) {
+  
   const copyImageToClipboard = (target) => {
     navigator.clipboard.writeText(target);
     console.log(target)
   }
+  
+  const galleryLoader = ({ src, width, quality }) => {
+    return `http://localhost:3000/${src}?q=${ quality || 50}`
+  }
 
-  return (
+   return (
     <>
       <Head>
         <title>Sihahdus</title>
@@ -35,46 +48,12 @@ export default function Gallery() {
             */}
             <p><span>copy</span> link by <span>clicking</span> image</p>
               <div className={styles.gallery}>
-                  { /* 
-                    maybe sort images by aspect ratio to make it look good?
-                    or just force them into one size and cover fit
-                  */ }
-          <Image onClick={() => { copyImageToClipboard(gallery_template_image2) } } className={styles.image} src={gallery_template_image} alt="1" />
-                  <Image className={styles.image} src={gallery_template_image2} alt="2" />
-                  <Image className={styles.image} src={gallery_template_image3} alt="2" />
-                  <Image className={styles.image} src={gallery_template_image4} alt="2" />
-                  <Image className={styles.image} src={gallery_template_image5} alt="1" />
-                  <Image className={styles.image} src={gallery_template_image6} alt="2" />
-                  <Image className={styles.image} src={gallery_template_image7} alt="2" />
-                  <Image className={styles.image} src={gallery_template_image} alt="2" />
-                  <Image className={styles.image} src={gallery_template_image2} alt="1" />
-                  <Image className={styles.image} src={gallery_template_image4} alt="2" />
-                  <Image className={styles.image} src={gallery_template_image4} alt="2" />
-                  <Image className={styles.image} src={gallery_template_image5} alt="2" />
-                  <Image className={styles.image} src={gallery_template_image6} alt="1" />
-                  <Image className={styles.image} src={gallery_template_image8} alt="2" />
-                  <Image className={styles.image} src={gallery_template_image2} alt="2" />
-                  <Image className={styles.image} src={gallery_template_image2} alt="2" />
-                  <Image className={styles.image} src={gallery_template_image} alt="1" />
-                  <Image className={styles.image} src={gallery_template_image3} alt="2" />
-                  <Image className={styles.image} src={gallery_template_image7} alt="2" />
-                  <Image className={styles.image} src={gallery_template_image2} alt="2" />
-                  <Image className={styles.image} src={gallery_template_image} alt="1" />
-                  <Image className={styles.image} src={gallery_template_image7} alt="2" />
-                  <Image className={styles.image} src={gallery_template_image2} alt="2" />
-                  <Image className={styles.image} src={gallery_template_image2} alt="2" />
-                  <Image className={styles.image} src={gallery_template_image} alt="1" />
-                  <Image className={styles.image} src={gallery_template_image9} alt="2" />
-                  <Image className={styles.image} src={gallery_template_image4} alt="2" />
-                  <Image className={styles.image} src={gallery_template_image8} alt="2" />
-                  <Image className={styles.image} src={gallery_template_image} alt="1" />
-                  <Image className={styles.image} src={gallery_template_image8} alt="2" />
-                  <Image className={styles.image} src={gallery_template_image9} alt="2" />
-                  <Image className={styles.image} src={gallery_template_image2} alt="2" />
-                  <Image className={styles.image} src={gallery_template_image} alt="1" />
-                  <Image className={styles.image} src={gallery_template_image2} alt="2" />
-                  <Image className={styles.image} src={gallery_template_image2} alt="2" />
-                  <Image className={styles.image} src={gallery_template_image2} alt="2" />
+            {
+             imageData.map((e) =>
+               (<Image loader={galleryLoader} key = { e } className = { styles.image } src = {`/${e}`} width={100} height={100} alt="gallery image" /> )
+             )
+
+            }
               </div>
 
       </main>
