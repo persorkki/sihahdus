@@ -1,4 +1,3 @@
-import lockimage from '../../public/icons8-lock-16.png'
 import SihahdusIcon from '../../public/sihahdus.svg'
 import styles from '../styles/Navigation.module.scss'
 
