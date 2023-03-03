@@ -27,8 +27,9 @@ export default function Gallery({ imageData }) {
     console.log(target);
   };
   */
-
-  const galleryLoader = ({ src, quality }) => `http://localhost:3000/${src}?q=${quality || 50}`;
+  
+  /* localhost is setup in next.config.js as domain */
+  const galleryLoader = ({ src, quality }) => `${src}?q=${quality || 50}`;
 
   return (
     <>
