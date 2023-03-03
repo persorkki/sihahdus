@@ -4,6 +4,8 @@ import { readdir } from 'node:fs/promises';
 import home from '../styles/Home.module.scss';
 import styles from '../styles/Gallery.module.scss';
 
+
+
 export async function getServerSideProps() {
   // const fs = require('fs')
 
