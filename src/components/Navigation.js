@@ -1,15 +1,15 @@
-import SihahdusIcon from '../../public/sihahdus.svg'
+//import SihahdusIcon from '../../public/sihahdus.svg'
 import styles from '../styles/Navigation.module.scss'
 
 import Link from 'next/link'
-import Image from 'next/image'
+//import Image from 'next/image'
 
 import ProtectedLink from './Navigation/ProtectedLink'
 
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 
-function Navigation({ children, href }) {
+function Navigation() {
     const router = useRouter();
     const [session, setSession] = useState(true);
     
