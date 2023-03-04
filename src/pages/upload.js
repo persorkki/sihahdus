@@ -8,9 +8,17 @@ export default function Upload() {
   async function addFile(e) {
     e.preventDefault();
 
+    const tagStrings = e.target.tags.value.split(" ")
+    const tags = [];
+
+    for (let i = 0; i < tagStrings.length; i++) {
+      tags.push({ description: tagStrings[i]})
+    }
+    
     const send = {
       name: e.target.name.value,
-      path: e.target.path.value
+      path: e.target.path.value,
+      tags: tags
     }
     console.log(send);
     const result = await fetch('/api/upload',
@@ -45,7 +53,9 @@ export default function Upload() {
         <br/>
           <label htmlFor="path">path</label>
           <input type="text" name="path" id="path"></input>
-        <br/>
+          <br />
+          <label htmlFor="tags">tags</label>
+          <input type="text" name="tags" id="tags"></input>
           <button type="submit">--send--</button>
         </form>
       </main>

@@ -10,16 +10,20 @@ export default async function handler(req, res) {
     }
 
     console.log(`[RECEIVING] ${req.body.name}`);
-    
+    console.log(req.body.tags);
     const dbObject = {
         name: req.body.name,
         path: req.body.path,
+        tags: req.body.tags
     }
 
     await prisma.image.create({
         data: {
             name: dbObject.name,
             path: dbObject.path,
+            tags: {
+                create: dbObject.tags
+              },
         }
     })
     
