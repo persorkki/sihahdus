@@ -34,3 +34,6 @@ yarn-error.log*
 /.vs
 
 src/styles/oldc.css
+
+prisma/dev.db
+prisma/migrations*

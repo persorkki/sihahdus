@@ -1,14 +1,15 @@
 import Head from 'next/head';
 import Image from 'next/image';
-import { readdir } from 'node:fs/promises';
+//import { readdir } from 'node:fs/promises';
 import home from '../styles/Home.module.scss';
 import styles from '../styles/Gallery.module.scss';
 
-
-
 export async function getServerSideProps() {
+  const res = await fetch('http://localhost:3000/api/getimages')
+  const imageData = await res.json()
+  console.log(imageData)
   // const fs = require('fs')
-
+  /*
   const folderPath = 'G:/code/web/sihahdus-necro/public/';
   let imageData = [];
   try {
@@ -17,6 +18,7 @@ export async function getServerSideProps() {
   } catch (err) {
     console.log(err);
   }
+  */
   return {
     props: { imageData },
   };
@@ -58,7 +60,7 @@ export default function Gallery({ imageData }) {
         </p>
         <div className={styles.gallery}>
           {
-             imageData.map((e) => (<Image loader={galleryLoader} key={e} className={styles.image} src={`/${e}`} width={100} height={100} alt="gallery image" />))
+             imageData.allImages.map((e) => (<Image loader={galleryLoader} key={e.id} className={styles.image} src={`/${e.path}`} width={100} height={100} alt="gallery image" />))
 
             }
         </div>
