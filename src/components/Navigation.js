@@ -16,9 +16,7 @@ function Navigation() {
     const checkRoute = (path) => {
         return router.pathname === path ? styles.current : ""
     }
-    const checkLoggedIn = (session) => {
-        return !session ? styles.noaccess : styles.access;
-    }
+
     const login = () => {
         setSession(!session);
     }
@@ -37,8 +35,8 @@ function Navigation() {
                         gallery
                     </li>
                 </Link>
-                <ProtectedLink session={session} route="/configure" checkLoggedIn={checkLoggedIn} checkRoute={checkRoute}>configure</ProtectedLink>
-                <ProtectedLink session={session} route="/upload" checkLoggedIn={checkLoggedIn} checkRoute={checkRoute}>upload</ProtectedLink>
+                {session && <ProtectedLink session={session} route="/configure" checkRoute={checkRoute}>configure</ProtectedLink> }
+                {session && <ProtectedLink session={session} route="/upload" checkRoute={checkRoute}>upload</ProtectedLink> } 
             </ul>
             {/* 
                 Maybe extract this login button into a component 

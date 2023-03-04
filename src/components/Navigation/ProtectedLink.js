@@ -1,9 +1,9 @@
 import Link from "next/link"
 
-export default function ProtectedLink({ session, route, checkLoggedIn, checkRoute, children }) {
+export default function ProtectedLink({ route, checkRoute, children }) {
     return (
         <>
-            <Link className={`${checkLoggedIn(session)} ${checkRoute(route)}`} href={route}>
+            <Link className={`${checkRoute(route)}`} href={route}>
                 <li>
                     {children}
                 </li>
