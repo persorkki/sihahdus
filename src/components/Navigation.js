@@ -5,6 +5,7 @@ import Link from 'next/link'
 //import Image from 'next/image'
 
 import ProtectedLink from './Navigation/ProtectedLink'
+import LoginButton from './Navigation/LoginButton'
 
 import { useRouter } from 'next/router'
 import { useState } from 'react'
@@ -47,13 +48,11 @@ function Navigation() {
 
                 TODO: add logged in button style
             */}
-            <Link onClick={login} href="#">
-                <div className={styles.login}>
-                    login
-                </div>
-            </Link>
+            <LoginButton session={session} login={login}></LoginButton>
+
         </nav>
     )
 }
+
 
 export { Navigation }

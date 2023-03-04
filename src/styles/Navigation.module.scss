@@ -115,4 +115,11 @@ $nav-text-color: $color-bg;
             padding: $mobile-padding;
         }
     }
+    .loggedin {
+        background-color: $indigo-dye;
+        &:hover {
+            background-color: $color-bg;
+            color: $process-cyan;
+        }
+    }
 }
