@@ -20,8 +20,11 @@ export default function Upload() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(send)
-
       })
+    if (!result.ok)
+    {
+      console.log(`something went wrong`, result);
+    }
   }
 
   return (
