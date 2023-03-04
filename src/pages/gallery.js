@@ -7,20 +7,9 @@ import styles from '../styles/Gallery.module.scss';
 export async function getServerSideProps() {
   const res = await fetch('http://localhost:3000/api/getimages')
   const imageData = await res.json()
-  console.log(imageData)
-  // const fs = require('fs')
-  /*
-  const folderPath = 'G:/code/web/sihahdus-necro/public/';
-  let imageData = [];
-  try {
-    const files = await readdir(folderPath);
-    imageData = files;
-  } catch (err) {
-    console.log(err);
-  }
-  */
+  
   return {
-    props: { imageData },
+    props: { imageData: imageData.allImages },
   };
 }
 
@@ -60,9 +49,8 @@ export default function Gallery({ imageData }) {
         </p>
         <div className={styles.gallery}>
           {
-             imageData.allImages.map((e) => (<Image loader={galleryLoader} key={e.id} className={styles.image} src={`/${e.path}`} width={100} height={100} alt="gallery image" />))
-
-            }
+            imageData.map((e) => (<Image loader={galleryLoader} key={e.id} className={styles.image} src={`/${e.path}`} width={100} height={100} alt={e.name} />))
+          }
         </div>
 
       </main>

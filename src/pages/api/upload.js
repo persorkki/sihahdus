@@ -4,17 +4,16 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient()
 
 export default async function handler(req, res) {
-
-    console.log(req.query);
-
-    if (!req.query.name || !req.query.path) {
-        res.status(400).json({ message: "no name or path" })
-        return;
+    if (req.method !== 'POST') {
+        res.status(405).json({ message: "POST only" })
+        return
     }
 
+    console.log(`[RECEIVING] ${req.body.name}`);
+    
     const dbObject = {
-        name: req.query.name,
-        path: req.query.path,
+        name: req.body.name,
+        path: req.body.path,
     }
 
     await prisma.image.create({
@@ -23,6 +22,7 @@ export default async function handler(req, res) {
             path: dbObject.path,
         }
     })
+    
     res.status(200).json({ message: "mo" })
 
     //upload(prisma)
