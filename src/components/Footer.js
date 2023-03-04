@@ -2,13 +2,14 @@ import Link from "next/link"
 import styles from "../styles/Footer.module.scss"
 import Image from "next/image"
 import GitHubImage from "public/github-mark-white.svg"
-
+import DigitalOceanImage from "public/DO_Logo_icon_blue.svg"
 function Footer() {
     return (
         <>
             <div className={styles.content}>
                 <div>
-                    <Link href="https://www.digitalocean.com/">
+                    <Link href="https://www.digitalocean.com/?refcode=b859d8ac1d3c&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge">
+                        <Image src={DigitalOceanImage} width={17} height={17} alt="digital ocean link" />
                         Digital Ocean
                     </Link>
                 </div>
@@ -29,11 +30,10 @@ function Footer() {
                     </Link>
                 </div>
                 */}
-
                 <div>
                     <Link href="https://github.com/persorkki/sihahdus">
                         <Image src={GitHubImage} width={17} height={17} alt="github link" />
-                        Github
+                        GitHub
                     </Link>
                 </div>
 
