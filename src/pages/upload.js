@@ -1,9 +1,9 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.scss'
-import { useState } from 'react'
+//import { useState } from 'react'
 
 export default function Upload() {
-  const [sendObject, setSendObject] = useState({ name: "", path: "" })
+  //const [sendObject, setSendObject] = useState({ name: "", path: "" })
   
   async function addFile(e) {
     e.preventDefault();
