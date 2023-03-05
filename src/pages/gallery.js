@@ -48,9 +48,21 @@ export default function Gallery({ imageData }) {
           image
         </p>
         <div className={styles.gallery}>
-          {
-            imageData.map((e) => (
-                <Image loader={galleryLoader} key={e.id} className={styles.image} src={`/${e.path}`} width={100} height={100} alt={e.name}/>
+          {imageData.map((e) => (
+            <div key={e.id} className={styles.galleryImage}>
+              <Image loader={galleryLoader} key={e.id} className={styles.image} src={`/${e.path}`} width={100} height={100} alt={e.name} />
+              {/*
+              <div key={e.id} className={styles.tags}>
+              {
+                e.tags.map((x) => (
+                  
+                    <div key={x.id} className={styles.tag}>{x.description}</div>
+                  
+                ))
+                }
+              </div>
+              */}
+            </div>
             ))
           }
         </div>
