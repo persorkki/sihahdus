@@ -39,12 +39,9 @@ export default function Gallery({ imageData }) {
               <h2></h2>
             */}
         <p>
-          <span>copy</span>
-          {' '}
+          <span>copy </span>
           link by
-          {' '}
-          <span>clicking</span>
-          {' '}
+          <span> clicking </span>
           image
         </p>
         <div className={styles.gallery}>
