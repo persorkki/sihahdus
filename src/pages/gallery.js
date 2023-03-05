@@ -4,6 +4,9 @@ import Image from 'next/image';
 import home from '../styles/Home.module.scss';
 import styles from '../styles/Gallery.module.scss';
 
+import { useEffect } from 'react';
+import { useState } from 'react';
+
 export async function getServerSideProps() {
   const res = await fetch('http://localhost:3000/api/getimages')
   const imageData = await res.json()
@@ -24,6 +27,17 @@ export default function Gallery({ imageData }) {
   /* localhost is setup in next.config.js as domain */
   const galleryLoader = ({ src, quality }) => `${src}?q=${quality || 50}`;
 
+  const [copyText, setCopyText] = useState("clicking")
+
+  useEffect(()=> {
+    window.addEventListener('resize', () => {
+      if (window.innerWidth < 700)
+        setCopyText("touching");
+      else
+        setCopyText("clicking");
+    })
+ }, [])
+  
   return (
     <>
       <Head>
@@ -34,14 +48,11 @@ export default function Gallery({ imageData }) {
       </Head>
 
       <main className={`${home.content} ${styles.content}`}>
-        {/*
-        <h1 className={home.title}>Gallery</h1>
-              <h2></h2>
-            */}
+        {/*<Banner>Gallery</Banner>*/}
         <p>
           <span>copy </span>
           link by
-          <span> clicking </span>
+          <span> {copyText} </span>
           image
         </p>
         <div className={styles.gallery}>
@@ -67,4 +78,15 @@ export default function Gallery({ imageData }) {
       </main>
     </>
   );
+}
+
+function Banner({ children }) {
+  return (
+    <>
+      <h1>
+        {children.slice(0, children.length/2)}
+        <span>{children.slice(children.length/2)}</span>
+      </h1>
+    </>
+  )  
 }
