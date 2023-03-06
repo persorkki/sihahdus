@@ -79,7 +79,7 @@ export default function Gallery({ imageData }) {
     </>
   );
 }
-
+{/*
 function Banner({ children }) {
   return (
     <>
@@ -89,4 +89,5 @@ function Banner({ children }) {
       </h1>
     </>
   )  
-}
+  } 
+*/}

@@ -9,6 +9,7 @@ function Footer() {
             <div className={styles.content}>
                 <div>
                     <Link href="https://www.digitalocean.com/?refcode=b859d8ac1d3c&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge">
+                        hosted on
                         <Image src={DigitalOceanImage} width={17} height={17} alt="digital ocean link" />
                         Digital Ocean
                     </Link>
@@ -32,6 +33,7 @@ function Footer() {
                 */}
                 <div>
                     <Link href="https://github.com/persorkki/sihahdus">
+                        source
                         <Image src={GitHubImage} width={17} height={17} alt="github link" />
                         GitHub
                     </Link>
