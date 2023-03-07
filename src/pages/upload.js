@@ -1,9 +1,12 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.scss'
 import { useState } from 'react'
+import { useRef } from 'react'
 
 export default function Upload() {
-  const [file, setFile] = useState(null);
+  //const [file, setFile] = useState(null);
+  const fileInputRef = useRef(null);
+  const fileBlaRef = useRef(null);
 
   function getTags(input) {
 
@@ -16,39 +19,38 @@ export default function Upload() {
     return tags
   }
 
-  const onUploadFileChanged = (e) => {
-    setFile(e.target.files[0])
-    //console.log(e.target.files);
-    //console.log(file);
-  }
-
-  async function addFile2(e, form) {
+  async function uploadFile(e) {
     e.preventDefault();
-    console.log(form);
-    //const tags = getTags(e.target.tags.value)
+    console.log(e.target);
     const formData = new FormData();
-    formData.append("uploadFile", file)
-    
-    for (const pair of formData.entries()) {
-      console.log(`${pair[0]}, ${pair[1]}`);
-    }
-    /*
+    formData.append("uploadFile", fileInputRef.current.files[0])
+    // additional fields
+    formData.append("bla", fileBlaRef.current.value)
+    /* 
+    https://stackoverflow.com/a/46640744
+    needs to have a boundary, which formidable sets by default
     const headers = {
       'Content-Type': 'multipart/form-data',
     }
     */
-    const result = await fetch('/api/upload',
-    {
-      method: "POST",
-      /* 
-         https://stackoverflow.com/a/46640744
-         headers: headers */
-      body: formData,
+    const response = await fetch('/api/upload',
+      {
+        method: "POST",
+        /* 
+           https://stackoverflow.com/a/46640744
+           headers: headers 
+        */
+        body: formData,
       })
     
-    console.log(result);
+    if (!response.ok) {
+      console.log(`something went wrong`, response.status);
+      
+    }
+    console.log(`file uploaded!`, response.status);
   }
 
+/*
   async function addFile(e) {
     e.preventDefault();
 
@@ -78,7 +80,7 @@ export default function Upload() {
       console.log(`something went wrong`, result);
     }
   }
-
+*/
   return (
     <>
       <Head>
@@ -91,9 +93,13 @@ export default function Upload() {
       <main className={styles.content}>
         <h1 className={styles.title}>upload</h1>
         <h2></h2>
-        <form onSubmit={(addFile2)}>
+        <form onSubmit={(uploadFile)}>
           <label htmlFor="files">file</label>
-          <input onChange={onUploadFileChanged} type="file" name="files" id="files" / >
+          { /* onChange={onUploadFileChanged} */ }
+          <input type="file" ref={fileInputRef} name="files" id="files" />
+          <br />
+          <label htmlFor="abc">name</label>
+          <input type="text" ref={fileBlaRef} name="abc"></input>
           <br />
           <input type="submit" value="upload" />
           {/*

@@ -1,49 +1,46 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { PrismaClient } from "@prisma/client";
-
+import path from 'path'
 import { IncomingForm } from "formidable"
 
 const prisma = new PrismaClient()
 
-
 export const config = {
-    
     api: {
         bodyParser: false,
         //responseLimit: '300mb',
     }
-    
 }
 
-
 export default async function handler(req, res) {
-    
     if (req.method !== 'POST') {
         res.status(405).json({ message: "endpoint accepts POST only" })
         return
     }
-    //console.log(req.body);
-    console.log(__dirname);
-    
     const options = {
-        //filename: ({ name, ext, part, form }) => { console.log(name, ext, part, form);  return ""},
+        // this should be changed if it was a public site
+        filename: (name, ext, part, form) => { return part.originalFilename; },
+        // this too
+        keepExtensions: true,                                                   
         allowEmptyFiles: false,
-        uploadDir: __dirname,     /* relative? */ 
-        maxFileSize: 200 * 1024 * 1024,                 /* default */
+        // TODO: needs to be env var
+        uploadDir: path.join(process.cwd(), "public"), 
+        // default is 200 * 1024 * 1024
+        maxFileSize: 5 * 1024 * 1024,                                         
     }
     const form = new IncomingForm(options);
     form.parse(req, (err, fields, files) => {
-        
         if (err) {
-            console.log(err);
+            console.dir(err)
+            prisma.$disconnect();
+            return res.status(400).json({ message: err })
         }
-        
         console.log(fields);
         console.log(files);
+        prisma.$disconnect();
+        return res.status(200).json({ message: "mo" })
     })
 
-    
-    
     /*
     const dbObject = {
         name: req.body.name,
@@ -61,13 +58,8 @@ export default async function handler(req, res) {
         }
     })
     */
-    res.status(200).json({ message: "mo" })
 
-    
-    prisma.$disconnect();
-
-    
-  }
+}
 /*
 async function upload() {
     await prisma.image.create({
