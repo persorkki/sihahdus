@@ -86,13 +86,15 @@
      */
 
     @media screen and (max-width: $mobile-screen-size) { 
+        /*
         flex: 1 0 100%;
         max-width: 100%;
+        */
     }
             
     @media screen and (max-width: $mobile-screen-size) { 
         width: 100%;
-        height: auto;
+        height: 14em;
     }
 
     
