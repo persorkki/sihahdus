@@ -16,6 +16,7 @@
     text-align:justify;
     margin-top: 1.5em;
     h1 {
+        
         text-align: left;
         font-size: 2.1em;
     }
@@ -56,9 +57,9 @@
         top: 100%;
         left: 50%;
         transform: translateX(-50%);
-        width: 100px; /* set the width of the tooltip */
-        height: 100px; /* set the height of the tooltip */
-        background-image: url("/public/sihahdus.svg"); /* set the background image */
+        width: 100px; 
+        height: 100px; 
+        background-image: url("/public/sihahdus.svg");
         background-size: cover;
         background-position: center;
     }

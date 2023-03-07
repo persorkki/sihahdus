@@ -1,13 +1,13 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.scss'
-import { useState } from 'react'
+//import { useState } from 'react'
 import { useRef } from 'react'
 
 export default function Upload() {
   //const [file, setFile] = useState(null);
   const fileInputRef = useRef(null);
   const fileBlaRef = useRef(null);
-
+  /*
   function getTags(input) {
 
     const tagStrings = input.split(" ")
@@ -18,10 +18,10 @@ export default function Upload() {
     }
     return tags
   }
+  */
 
   async function uploadFile(e) {
     e.preventDefault();
-    console.log(e.target);
     const formData = new FormData();
     formData.append("uploadFile", fileInputRef.current.files[0])
     // additional fields
@@ -43,11 +43,14 @@ export default function Upload() {
         body: formData,
       })
     
-    if (!response.ok) {
-      console.log(`something went wrong`, response.status);
-      
+    if (response.status != 200) {
+      console.log(`something went wrong: "${response.status} ${response.statusText}"`);
+      return;
     }
-    console.log(`file uploaded!`, response.status);
+    else {
+      console.log(`file successfully uploaded "${response.status} ${response.statusText}"`);
+    }
+    
   }
 
 /*

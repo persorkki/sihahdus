@@ -1,19 +1,33 @@
+// next imports
 import Head from 'next/head';
 import Image from 'next/image';
-//import { readdir } from 'node:fs/promises';
+// styles
 import home from '../styles/Home.module.scss';
 import styles from '../styles/Gallery.module.scss';
-
+// react
 import { useEffect } from 'react';
 import { useState } from 'react';
+// others
+import { PrismaClient } from "@prisma/client";
 
+//staticprops?
 export async function getServerSideProps() {
-  const res = await fetch('http://localhost:3000/api/getimages')
-  const imageData = await res.json()
-  
+  const prisma = new PrismaClient()
+  /*
+  const response = await fetch('http://localhost:3000/api/getimages')
+  const imageData = await response.json()
+  */
+  const imageData = await prisma.image.findMany({
+    include: {
+      tags: true,
+    },
+  })
+  prisma.$disconnect(); 
   return {
-    props: { imageData: imageData.allImages },
+    props: { imageData: imageData },
+    //revalidate: 10
   };
+  
 }
 
 export default function Gallery({ imageData }) {

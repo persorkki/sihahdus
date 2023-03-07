@@ -1,8 +1,6 @@
 /*import '@/styles/globals.css'*/
 import '@/styles/styles.scss'
-import { Roboto_Mono } from '@next/font/google'
 import { Fira_Sans } from '@next/font/google'
-import { Roboto } from '@next/font/google'
 import { Layout } from '@/components/Layout'
 
 /* TODO: rename this variable */

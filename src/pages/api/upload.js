@@ -3,42 +3,57 @@ import { PrismaClient } from "@prisma/client";
 import path from 'path'
 import { IncomingForm } from "formidable"
 
-const prisma = new PrismaClient()
-
 export const config = {
     api: {
         bodyParser: false,
-        //responseLimit: '300mb',
     }
 }
-
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
-        res.status(405).json({ message: "endpoint accepts POST only" })
-        return
+        return res.status(405).json({ message: "endpoint accepts POST only" })
     }
+
     const options = {
         // this should be changed if it was a public site
-        filename: (name, ext, part, form) => { return part.originalFilename; },
+        filename: (name, ext, part) => { return part.originalFilename; },
         // this too
         keepExtensions: true,                                                   
         allowEmptyFiles: false,
         // TODO: needs to be env var
         uploadDir: path.join(process.cwd(), "public"), 
         // default is 200 * 1024 * 1024
-        maxFileSize: 5 * 1024 * 1024,                                         
+        maxFileSize: 5 * 1024 * 1024,
+        hashAlgorithm: 'md5',
     }
     const form = new IncomingForm(options);
     form.parse(req, (err, fields, files) => {
         if (err) {
-            console.dir(err)
-            prisma.$disconnect();
-            return res.status(400).json({ message: err })
+            if (err.httpCode) {
+                res.status(err.httpCode).json();
+            }
+            return res.status(400).json()
         }
-        console.log(fields);
-        console.log(files);
+        
+        const file = files.uploadFile[0]
+        const fileObject = {
+            mimeType: file.mimetype,
+            md5: file.hash,
+            filename: file.newFilename,
+            size: file.size,
+            localFilepath: file.filepath,
+            remoteFilepath: "http://localhost:3000/" + file.newFilename,
+        }
+
+        console.log(fileObject);
+        if (fileObject.mimetype === "image/gif") {
+            return res.status(422).json()
+        }
+                
+        const prisma = new PrismaClient()
+        //console.log(files);
+
         prisma.$disconnect();
-        return res.status(200).json({ message: "mo" })
+        return res.status(200).json()
     })
 
     /*
