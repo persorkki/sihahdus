@@ -27,7 +27,6 @@ export async function getServerSideProps() {
     props: { imageData: imageData },
     //revalidate: 10
   };
-  
 }
 
 export default function Gallery({ imageData }) {
