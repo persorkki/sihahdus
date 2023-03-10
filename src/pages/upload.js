@@ -42,13 +42,14 @@ export default function Upload() {
         */
         body: formData,
       })
-    
+    console.log(response);
     if (response.status != 200) {
       console.log(`something went wrong: "${response.status} ${response.statusText}"`);
       return;
     }
     else {
       console.log(`file successfully uploaded "${response.status} ${response.statusText}"`);
+      console.log(response);
     }
     
   }

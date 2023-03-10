@@ -10,14 +10,18 @@ export const config = {
 }
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
-        return res.status(405).json({ message: "endpoint accepts POST only" })
+        
+        return res.status(405).end()
     }
-
+    
     const options = {
         // this should be changed if it was a public site
-        filename: (name, ext, part) => { return part.originalFilename; },
+        filename: (name, ext, part) => {
+            return part.originalFilename.replaceAll(" ", "_");
+            //return part.originalFilename;
+        },
         // this too
-        keepExtensions: true,                                                   
+        keepExtensions: true,
         allowEmptyFiles: false,
         // TODO: needs to be env var
         uploadDir: path.join(process.cwd(), "public"), 
@@ -25,13 +29,15 @@ export default async function handler(req, res) {
         maxFileSize: 5 * 1024 * 1024,
         hashAlgorithm: 'md5',
     }
+    
     const form = new IncomingForm(options);
     form.parse(req, (err, fields, files) => {
         if (err) {
             if (err.httpCode) {
-                res.status(err.httpCode).json();
+                
+                res.status(err.httpCode).end()
             }
-            return res.status(400).json()
+            return res.status(400).end()
         }
         
         const file = files.uploadFile[0]
@@ -45,15 +51,17 @@ export default async function handler(req, res) {
         }
 
         console.log(fileObject);
-        if (fileObject.mimetype === "image/gif") {
-            return res.status(422).json()
+        if (fileObject.mimeType === "image/gif") {
+            // maybe ffmpeg exec call?
+            // ffmpeg -i fist.gif -vf "select=eq(n\,0)" -vframes 1 output.png
+            return res.status(422).end()
         }
                 
         const prisma = new PrismaClient()
         //console.log(files);
 
         prisma.$disconnect();
-        return res.status(200).json()
+        return res.send({test:"test"})
     })
 
     /*

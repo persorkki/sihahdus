@@ -33,7 +33,7 @@ function Footer() {
                 */}
                 <div>
                     <Link href="https://github.com/persorkki/sihahdus">
-                        source
+                        source on
                         <Image src={GitHubImage} width={17} height={17} alt="github link" />
                         GitHub
                     </Link>
