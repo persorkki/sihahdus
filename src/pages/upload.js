@@ -1,31 +1,42 @@
 import Head from 'next/head'
-import styles from '../styles/Home.module.scss'
-//import { useState } from 'react'
-import { useRef } from 'react'
+import home from '../styles/Home.module.scss'
+import styles from '../styles/Upload.module.scss'
+
+import { useEffect, useState } from 'react'
+
+const status = {
+  DEFAULT: {
+    text: "idle",
+    style: styles.statusIdle
+  },
+  UPLOADING: {
+    text: "uploading...",
+    style: styles.statusUploading
+  },
+  SUCCESS: {
+    text: "file uploaded!",
+    style: styles.statusSuccess
+  },
+  FAIL: {
+    text: "upload failed",
+    style: styles.statusFail
+  },
+}
+
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 export default function Upload() {
-  //const [file, setFile] = useState(null);
-  const fileInputRef = useRef(null);
-  const fileBlaRef = useRef(null);
-  /*
-  function getTags(input) {
-
-    const tagStrings = input.split(" ")
-    const tags = [];
-
-    for (let i = 0; i < tagStrings.length; i++) {
-      tags.push({ description: tagStrings[i]})
-    }
-    return tags
-  }
-  */
+  const [file, setFile] = useState(null);
+  const [uploadStatus, setUploadStatus] = useState(status.DEFAULT);
+  
+  //setUploadStatus
 
   async function uploadFile(e) {
     e.preventDefault();
+    setUploadStatus(status.UPLOADING)
     const formData = new FormData();
-    formData.append("uploadFile", fileInputRef.current.files[0])
-    // additional fields
-    formData.append("bla", fileBlaRef.current.value)
+    await sleep(1000);
+    formData.append("uploadFile", file)
     /* 
     https://stackoverflow.com/a/46640744
     needs to have a boundary, which formidable sets by default
@@ -43,11 +54,28 @@ export default function Upload() {
         body: formData,
       })
     console.log(response);
-    if (response.status != 200) {
+    if (!response.ok) {
+      switch (response.status)
+      {
+        case (422):
+          console.log("422");
+          break;
+        case (413):
+          console.log("413");
+          break;
+      }
       console.log(`something went wrong: "${response.status} ${response.statusText}"`);
+      setUploadStatus(status.FAIL)
+      setTimeout(() => {
+        setUploadStatus(status.DEFAULT)
+      }, 2000);
       return;
     }
     else {
+      setUploadStatus(status.SUCCESS)
+      setTimeout(() => {
+        setUploadStatus(status.DEFAULT)
+      }, 2000);
       console.log(`file successfully uploaded "${response.status} ${response.statusText}"`);
       console.log(response);
     }
@@ -93,19 +121,31 @@ export default function Upload() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/sihahdus.ico" />
       </Head>
-      
-      <main className={styles.content}>
-        <h1 className={styles.title}>upload</h1>
-        <h2></h2>
+
+      <main className={home.content}
+        onDragOver={(e) => { e.preventDefault() }}
+        onDrop={(e) => { e.preventDefault() }} >
+        
+
+        <div className={styles.formcontent}>
         <form onSubmit={(uploadFile)}>
-          <label htmlFor="files">file</label>
-          { /* onChange={onUploadFileChanged} */ }
-          <input type="file" ref={fileInputRef} name="files" id="files" />
-          <br />
+        <div className={styles.statusbox}>
+          <p className={uploadStatus.style}>{uploadStatus.text}</p>
+        </div>
+            <label onDrop={(e) => { setFile(e.dataTransfer.files[0]) }} className={styles.uploadbox} htmlFor="files">{file ? file.name : "drag & drop"}</label>
+          {/* 
+          label takes over and we use that as our file input, since htmlFor makes it work
+          file input should probably not use "hidden" and put it in the CSS instead 
+          */}
+            <input
+              onChange={(e) => { setFile(e.target.files[0]) }} className={styles.fileInput} type="file" name="files" id="files" />
+          
+          {/*
           <label htmlFor="abc">name</label>
           <input type="text" ref={fileBlaRef} name="abc"></input>
-          <br />
-          <input type="submit" value="upload" />
+          */}
+          
+            <input className={styles.submitbutton} type="submit" value="upload" />
           {/*
           <label htmlFor="name">name</label>
           <input type="text" name="name" id="name"></input>
@@ -117,7 +157,9 @@ export default function Upload() {
           <input type="text" name="tags" id="tags"></input>
           <button type="submit">--send--</button>
           */}
-        </form>
+          </form>
+          
+        </div>
       </main>
     </>
   )

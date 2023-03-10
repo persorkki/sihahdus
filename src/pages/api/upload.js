@@ -34,7 +34,6 @@ export default async function handler(req, res) {
     form.parse(req, (err, fields, files) => {
         if (err) {
             if (err.httpCode) {
-                
                 res.status(err.httpCode).end()
             }
             return res.status(400).end()

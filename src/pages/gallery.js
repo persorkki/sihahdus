@@ -63,7 +63,7 @@ export default function Gallery({ imageData }) {
       <main className={`${home.content} ${styles.content}`}>
         {/*<Banner>Gallery</Banner>*/}
         <p>
-          <span>copy </span>
+          copy
           link by
           <span> {copyText} </span>
           image
