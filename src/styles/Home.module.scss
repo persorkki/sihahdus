@@ -16,7 +16,6 @@
     text-align:justify;
     margin-top: 1.5em;
     h1 {
-        
         text-align: left;
         font-size: 2.1em;
     }
@@ -32,7 +31,10 @@
         line-height: 1.4em;
         margin-bottom: 1em;
         margin-top: 1.5em;
-
+        @media screen and (max-width: $mobile-screen-size) {
+            margin-bottom: 0.5em;
+            margin-top: 0.5em;
+        }
     }
     span {
         @include highlight-span;
@@ -62,6 +64,10 @@
         background-image: url("/public/sihahdus.svg");
         background-size: cover;
         background-position: center;
+    }
+    @media screen and (max-width: $mobile-screen-size) {
+        margin-bottom: 0.5em;
+        margin-top: 0.5em;
     }
     
 }
