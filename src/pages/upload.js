@@ -26,7 +26,7 @@ const status = {
     style: styles.statusFail
   },
   FAIL_PAYLOAD_TOO_LARGE: {
-    text: "file too big",
+    text: "file is too big",
     style: styles.statusFail
   }
 }
@@ -145,8 +145,8 @@ export default function Upload() {
       </Head>
 
       <main className={home.content}
-        onDragOver={(e) => { e.preventDefault() }}
-        onDrop={(e) => { e.preventDefault() }} >
+        onDragOver={(e) => { e.preventDefault();e.stopPropagation() }}
+        onDrop={(e) => { e.preventDefault(); e.stopPropagation()}} >
 
 
         <div className={styles.formcontent}>
@@ -171,7 +171,7 @@ export default function Upload() {
                   } : {}}
                 onDragLeave={() => {setDrag(false)}}
                 onDragOver={() => {setDrag(true)}}
-                onDrop={(e) => { setFile(e.dataTransfer.files[0]) }}
+                onDrop={(e) => { setFile(e.dataTransfer.files[0]);  setDrag(false)}}
                 className={`${styles.uploadbox} ${drag ? styles.dragover : ""}`}
                 htmlFor="files">
                 {file ? "" : "drag & drop"}
