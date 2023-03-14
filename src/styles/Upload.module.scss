@@ -1,0 +1,183 @@
+@import "./variables.scss";
+
+.statusIdle {
+    color: $rich-black;
+}
+
+.statusUploading {
+    color: $rich-black;
+}
+.statusSuccess {
+    
+    color: $process-cyan;
+}
+.statusFail {
+    color: $engineering-orange;
+}
+.statusbox {
+    
+    display: flex;
+    flex-direction: column;
+    
+    text-align: center;
+    margin: 0 auto;
+    color: $process-cyan;
+    max-width:40em;
+    p {
+        margin-top: 0;
+        font-weight:bold;
+        font-size: x-large;
+    }
+
+    @media screen and (max-width: $mobile-screen-size) {
+        max-width: 23em;
+    }
+}
+
+.statusfn {
+    //background-color: $rich-black;
+    color: $rich-black;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+}
+
+
+.dragover {
+    box-shadow: 0 0 0 10000px rgba(0,0,0,.5);
+    z-index: 999;
+    z-index: 0;
+}
+
+.formcontent {
+    display: flex;
+    //background-color: $ghost-white;
+    //border: 2px solid red;
+    justify-content: center;
+    margin-bottom: 1em;
+    
+
+    form {
+        .submitbutton {
+            
+            width: 100%;
+            height: 4em;
+            //margin: 1em 0 1em 0;
+            //box-shadow:inset 0px 34px 0px -15px $ghost-white;
+
+            /*
+            background-color:$process-cyan;
+            color: $ghost-white;
+            */
+
+            background-color: $engineering-orange;
+            color: $ghost-white;
+
+            //border:1px solid #241d13;
+            border: none;
+            display: block;
+            cursor:pointer;
+            
+            font-family:"Fira Sans";
+            font-size:16px;
+            font-weight:bold;
+            padding:9px 23px;
+            text-decoration:none;
+            margin: 0 auto;
+            
+            &:hover {
+
+                color: $ghost-white;
+                background-color: $rich-black;
+                
+                transition-property: background-color, color;
+                transition-duration: 1s;
+
+                
+                
+                //transition: background-size .4s, background-position 0s .4s;
+//              background-color:$color-bg;
+                //color: $process-cyan;
+                //border:1px solid $process-cyan;
+
+            }
+            &:active {
+                position:relative;
+                top:2px;
+                
+            }
+            
+            
+        }
+    }
+}
+.fileInput {
+    
+    /*
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+    pointer-events: none;
+    */
+    //opacity: 0;
+    display: none;
+  }
+
+
+.uploadboxcontainer {
+    
+    //background-color: $rich-black;
+    
+    //padding: 0.5em 1.5em 0.5em 1.5em;
+    //margin-bottom: 1em;    
+}
+
+.uploadbox {    
+    margin: 1em 0 1em 0;
+    display: block;
+ 
+    
+    padding: 6em 8em 6em 8em;
+    //background-color: $rich-black;
+    border: 2px dashed  $engineering-orange;
+    color:  $engineering-orange;
+    font-weight: bold;
+
+    
+    
+    //border: 2px dotted $color-accent;
+    
+    text-align: center;
+    height: 15em;
+    width: 40em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    @media screen and (max-width: $mobile-screen-size) {
+        width: 23em;
+    }
+    
+    @keyframes test {
+        
+        0% {
+            color: $engineering-orange;
+            border-color: $engineering-orange;
+        }
+        50% {
+            color: $process-cyan;
+            border-color: $process-cyan;
+        }
+        100% {
+            color: $engineering-orange;
+            border-color: $engineering-orange;
+        }
+    }
+    &:hover {
+        animation-name: test;
+        animation-duration: 1.5s;
+        animation-iteration-count: infinite;
+        animation-timing-function:cubic-bezier(0.445, 0.05, 0.55, 0.95);
+    }
+    
+}
+
