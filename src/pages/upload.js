@@ -2,6 +2,9 @@ import Head from 'next/head'
 import home from '../styles/Home.module.scss'
 import styles from '../styles/Upload.module.scss'
 
+import ErrorView from '@/components/ErrorView';
+
+import { useSession } from "next-auth/react"
 import { useEffect, useState } from 'react'
 
 const status = {
@@ -31,19 +34,25 @@ const status = {
   }
 }
 
+//TODO: remove later, used for simulating delay from server
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 export default function Upload() {
+  const { data: session } = useSession()
+
   const [file, setFile] = useState(null);
   const [uploadStatus, setUploadStatus] = useState(status.DEFAULT);
   const [drag, setDrag] = useState(false);
   const [fileBlob, setFileBlob] = useState(null);
+  const [filenameText, setFilenameText] = useState("...");
 
   useEffect(() => {
-    file ? setFileBlob(URL.createObjectURL(file)) : "";
-    
+    if (file)
+    {
+      setFileBlob(URL.createObjectURL(file))
+      setFilenameText(file.name);
+    }
   }, [file]);
-  //setUploadStatus
 
   async function uploadFile(e) {
     e.preventDefault();
@@ -73,35 +82,18 @@ export default function Upload() {
       switch (response.status) {
         // unprocessable entity
         case (422):
-          console.log("422");
           setUploadStatus(status.FAIL_UNPROCESSABLE_ENTITY)
           break;
         // payload too large
         case (413):
-          console.log("413");
           setUploadStatus(status.FAIL_PAYLOAD_TOO_LARGE);
           break;
       }
-      /*
-      console.log(`something went wrong: "${response.status} ${response.statusText}"`);
-      setUploadStatus(status.FAIL)
-      setTimeout(() => {
-        setUploadStatus(status.DEFAULT)
-      }, 2000);
-      */
       return;
     }
-    else {
+      const data = await response.json();
+      setFilenameText(data.fileObject.remoteFilepath);
       setUploadStatus(status.SUCCESS)
-      /*
-      setTimeout(() => {
-        setUploadStatus(status.DEFAULT)
-      }, 2000);
-      */
-      console.log(`file successfully uploaded "${response.status} ${response.statusText}"`);
-      console.log(response);
-    }
-
   }
 
   /*
@@ -135,6 +127,14 @@ export default function Upload() {
       }
     }
   */
+  if (!session)
+  {
+    return (
+      <>
+        <ErrorView></ErrorView>
+      </>
+    )
+  }
   return (
     <>
       <Head>
@@ -154,13 +154,15 @@ export default function Upload() {
             <div className={styles.statusbox}>
               <p className={uploadStatus.style}>{uploadStatus.text}</p>
               <div className={styles.statusfn}
-                style={file ? { visibility: "visible" } : {visibility:"hidden"}}
-              >{file ? file.name : "..."}</div>
+                style={file ? { visibility: "visible" } : { visibility: "hidden" }}>
+                { filenameText }
+                {/*file ? file.name : "..."*/}
+              </div>
             </div>
             <div className={styles.uploadboxcontainer}>
               {/*file && <img src={URL.createObjectURL(file)}/>*/ }
               <label
-
+                // TODO: move style to a css module or something
                 style={fileBlob ? 
                   {
                     backgroundImage: fileBlob ? `url(${fileBlob})` : "",

@@ -1,7 +1,19 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.scss'
+import ErrorView from '@/components/ErrorView';
+
+import { useSession } from "next-auth/react"
 
 export default function Configure() {
+  const { data: session } = useSession();
+  if (!session)
+  {
+    return (
+      <>
+        <ErrorView></ErrorView>
+      </>
+    )
+  }
   return (
     <>
       <Head>

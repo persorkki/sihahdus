@@ -9,18 +9,20 @@ import LoginButton from './Navigation/LoginButton'
 
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { useSession, signIn, signOut } from "next-auth/react";
 
 function Navigation() {
     const router = useRouter();
-    const [session, setSession] = useState(true);
-
+    //const [session, setSession] = useState(true);
+    const { data: session } = useSession();
     const checkRoute = (path) => {
         return router.pathname === path ? styles.current : ""
     }
-
+    /*
     const login = () => {
         setSession(!session);
     }
+    */
 
     return (
         <nav className={styles.navbar}>
@@ -39,7 +41,10 @@ function Navigation() {
                 {session && <ProtectedLink session={session} route="/configure" checkRoute={checkRoute}>configure</ProtectedLink>}
                 {session && <ProtectedLink session={session} route="/upload" checkRoute={checkRoute}>upload</ProtectedLink>}
             </ul>
-            <LoginButton session={session} login={login}></LoginButton>
+            {session ?
+                <LoginButton session={session} login={signOut}></LoginButton> :
+                <LoginButton session={session} login={signIn}></LoginButton>
+            }
         </nav>
     )
 }

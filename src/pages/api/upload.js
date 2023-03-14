@@ -8,17 +8,17 @@ export const config = {
         bodyParser: false,
     }
 }
+
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
-        
         return res.status(405).end()
     }
-    
     const options = {
         // this should be changed if it was a public site
         filename: (name, ext, part) => {
-            return part.originalFilename.replaceAll(" ", "_");
-            //return part.originalFilename;
+            //console.log(encodeURI(part.originalFilename));
+            //return part.originalFilename.replaceAll(" ", "_");
+            return part.originalFilename;
         },
         // this too
         keepExtensions: true,
@@ -46,7 +46,8 @@ export default async function handler(req, res) {
             filename: file.newFilename,
             size: file.size,
             localFilepath: file.filepath,
-            remoteFilepath: "http://localhost:3000/" + file.newFilename,
+            //TODO: to env...
+            remoteFilepath: "http://localhost:3000/" + encodeURI(file.newFilename)
         }
 
         console.log(fileObject);
@@ -56,11 +57,11 @@ export default async function handler(req, res) {
             return res.status(422).end()
         }
                 
-        const prisma = new PrismaClient()
+        //const prisma = new PrismaClient()
         //console.log(files);
 
-        prisma.$disconnect();
-        return res.send({test:"test"})
+        //prisma.$disconnect();
+        return res.status(200).json({ fileObject });
     })
 
     /*
