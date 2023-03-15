@@ -156,16 +156,17 @@
     @media screen and (max-width: $mobile-screen-size) {
         width: 23em;
     }
-    
+    /*
     @keyframes test {
-        
+        $lighter-orange: #1d0202;
         0% {
             color: $engineering-orange;
             border-color: $engineering-orange;
         }
         50% {
-            color: $process-cyan;
-            border-color: $process-cyan;
+            color: $ghost-white;
+            border-color: $lighter-orange;
+            background-color: #1d0202;
         }
         100% {
             color: $engineering-orange;
@@ -178,6 +179,7 @@
         animation-iteration-count: infinite;
         animation-timing-function:cubic-bezier(0.445, 0.05, 0.55, 0.95);
     }
+    */
     
 }
 

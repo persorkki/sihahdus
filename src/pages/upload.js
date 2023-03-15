@@ -91,9 +91,10 @@ export default function Upload() {
       }
       return;
     }
-      const data = await response.json();
-      setFilenameText(data.fileObject.remoteFilepath);
-      setUploadStatus(status.SUCCESS)
+    const data = await response.json();
+    setFilenameText(data.fileObject.remoteFilepath);
+    setUploadStatus(status.SUCCESS)
+    return;
   }
 
   /*
