@@ -47,8 +47,7 @@ export default function Upload() {
   const [filenameText, setFilenameText] = useState("...");
 
   useEffect(() => {
-    if (file)
-    {
+    if (file) {
       setFileBlob(URL.createObjectURL(file))
       setFilenameText(file.name);
     }
@@ -77,7 +76,7 @@ export default function Upload() {
         */
         body: formData,
       })
-    //console.log(response);
+
     if (!response.ok) {
       switch (response.status) {
         // unprocessable entity
@@ -97,39 +96,7 @@ export default function Upload() {
     return;
   }
 
-  /*
-    async function addFile(e) {
-      e.preventDefault();
-  
-      const tagStrings = e.target.tags.value.split(" ")
-      const tags = [];
-  
-      for (let i = 0; i < tagStrings.length; i++) {
-        tags.push({ description: tagStrings[i]})
-      }
-      
-      const send = {
-        name: e.target.name.value,
-        path: e.target.path.value,
-        tags: tags
-      }
-      console.log(send);
-      const result = await fetch('/api/upload',
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(send)
-        })
-      if (!result.ok)
-      {
-        console.log(`something went wrong`, result);
-      }
-    }
-  */
-  if (!session)
-  {
+  if (!session) {
     return (
       <>
         <ErrorView></ErrorView>
@@ -146,8 +113,8 @@ export default function Upload() {
       </Head>
 
       <main className={home.content}
-        onDragOver={(e) => { e.preventDefault();e.stopPropagation() }}
-        onDrop={(e) => { e.preventDefault(); e.stopPropagation()}} >
+        onDragOver={(e) => { e.preventDefault(); e.stopPropagation() }}
+        onDrop={(e) => { e.preventDefault(); e.stopPropagation() }} >
 
 
         <div className={styles.formcontent}>
@@ -156,15 +123,15 @@ export default function Upload() {
               <p className={uploadStatus.style}>{uploadStatus.text}</p>
               <div className={styles.statusfn}
                 style={file ? { visibility: "visible" } : { visibility: "hidden" }}>
-                { filenameText }
+                {filenameText}
                 {/*file ? file.name : "..."*/}
               </div>
             </div>
             <div className={styles.uploadboxcontainer}>
-              {/*file && <img src={URL.createObjectURL(file)}/>*/ }
+              {/*file && <img src={URL.createObjectURL(file)}/>*/}
               <label
                 // TODO: move style to a css module or something
-                style={fileBlob ? 
+                style={fileBlob ?
                   {
                     backgroundImage: fileBlob ? `url(${fileBlob})` : "",
                     backgroundRepeat: "no-repeat",
@@ -172,9 +139,9 @@ export default function Upload() {
                     backgroundSize: "contain",
                     backgroundOrigin: "padding-box",
                   } : {}}
-                onDragLeave={() => {setDrag(false)}}
-                onDragOver={() => {setDrag(true)}}
-                onDrop={(e) => { setFile(e.dataTransfer.files[0]);  setDrag(false)}}
+                onDragLeave={() => { setDrag(false) }}
+                onDragOver={() => { setDrag(true) }}
+                onDrop={(e) => { setFile(e.dataTransfer.files[0]); setDrag(false) }}
                 className={`${styles.uploadbox} ${drag ? styles.dragover : ""}`}
                 htmlFor="files">
                 {file ? "" : "drag & drop"}

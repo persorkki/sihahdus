@@ -12,15 +12,12 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient()
 //staticprops?
 export async function getServerSideProps() {
-  
-  /*
-  const response = await fetch('http://localhost:3000/api/getimages')
-  const imageData = await response.json()
-  */
-  const imageData = await prisma.image.findMany({
-    include: {
-      tags: true,
-    },
+  const imageData = await prisma.file.findMany({
+    where: {
+      mime: {
+        startsWith: "image"
+      }
+    }
   })
   return {
     props: { imageData: imageData },
@@ -70,18 +67,7 @@ export default function Gallery({ imageData }) {
         <div className={styles.gallery}>
           {imageData.map((e) => (
             <div key={e.id} className={styles.galleryImage}>
-              <Image loader={galleryLoader} key={e.id} className={styles.image} src={`/${e.path}`} width={100} height={100} alt={e.name} />
-              {/*
-              <div key={e.id} className={styles.tags}>
-              {
-                e.tags.map((x) => (
-                  
-                    <div key={x.id} className={styles.tag}>{x.description}</div>
-                  
-                ))
-                }
-              </div>
-              */}
+              <Image loader={galleryLoader} key={e.id} className={styles.image} src={`/${e.filename}`} width={100} height={100} alt={e.filename} />
             </div>
             ))
           }
@@ -91,15 +77,3 @@ export default function Gallery({ imageData }) {
     </>
   );
 }
-{/*
-function Banner({ children }) {
-  return (
-    <>
-      <h1>
-        {children.slice(0, children.length/2)}
-        <span>{children.slice(children.length/2)}</span>
-      </h1>
-    </>
-  )  
-  } 
-*/}

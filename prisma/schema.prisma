@@ -10,16 +10,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Image {
+model File {
   id   Int    @id @default(autoincrement())
-  name String
-  path String @unique
-  tags Tag[]
-}
-
-model Tag {
-  id          Int    @id @default(autoincrement())
-  description String
-  Image   Image @relation(fields: [imageId], references: [id])
-  imageId Int
+  mime String
+  md5 String @unique
+  filename String
+  size Int
+  localFilepath String @unique
+  remoteFilepath String @unique
 }

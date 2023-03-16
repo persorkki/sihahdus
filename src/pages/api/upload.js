@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-//import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import path from 'path'
 import { IncomingForm } from "formidable"
 
@@ -8,6 +8,8 @@ export const config = {
         bodyParser: false,
     }
 }
+
+const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
@@ -29,19 +31,18 @@ export default async function handler(req, res) {
         maxFileSize: 5 * 1024 * 1024,
         hashAlgorithm: 'md5',
     }
-    
     const form = new IncomingForm(options);
-    form.parse(req, (err, fields, files) => {
+    form.parse(req, async (err, fields, files) => {
         if (err) {
             if (err.httpCode) {
                 res.status(err.httpCode).end()
             }
             return res.status(400).end()
         }
-        
+
         const file = files.uploadFile[0]
         const fileObject = {
-            mimeType: file.mimetype,
+            mime: file.mimetype,
             md5: file.hash,
             filename: file.newFilename,
             size: file.size,
@@ -50,17 +51,18 @@ export default async function handler(req, res) {
             remoteFilepath: "http://localhost:3000/" + encodeURI(file.newFilename)
         }
 
-        console.log(fileObject);
-        if (fileObject.mimeType === "image/gif") {
+        
+        if (fileObject.mime === "image/gif") {
             // maybe ffmpeg exec call?
             // ffmpeg -i fist.gif -vf "select=eq(n\,0)" -vframes 1 output.png
             return res.status(422).end()
         }
-                
-        //const prisma = new PrismaClient()
-        //console.log(files);
 
-        //prisma.$disconnect();
+        const newObj = await prisma.file.create({
+            data: fileObject
+        }).then(res => console.log(res))
+        console.log(fileObject);
+        console.log(newObj);
         return res.status(200).json({ fileObject });
     })
 
