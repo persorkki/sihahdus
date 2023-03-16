@@ -33,15 +33,11 @@ yarn-error.log*
 # vercel
 .vercel
 
-#
 public/*
 !public/sihahdus.ico
 !public/sihahdus.svg
 
-
 /.vs
-
-src/styles/oldc.css
 
 prisma/dev.db
 prisma/migrations*
