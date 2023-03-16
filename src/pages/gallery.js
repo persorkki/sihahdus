@@ -9,10 +9,10 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 // others
 import { PrismaClient } from "@prisma/client";
-
+const prisma = new PrismaClient()
 //staticprops?
 export async function getServerSideProps() {
-  const prisma = new PrismaClient()
+  
   /*
   const response = await fetch('http://localhost:3000/api/getimages')
   const imageData = await response.json()
@@ -22,7 +22,6 @@ export async function getServerSideProps() {
       tags: true,
     },
   })
-  prisma.$disconnect(); 
   return {
     props: { imageData: imageData },
     //revalidate: 10

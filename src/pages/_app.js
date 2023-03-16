@@ -15,7 +15,6 @@ export default function App({ Component, pageProps: {session, ...pageProps} }) {
     <main className={font.className}>
       <SessionProvider session={session}>
       <Layout>
-        
         <Component {...pageProps} />
         </Layout>
       </SessionProvider>
