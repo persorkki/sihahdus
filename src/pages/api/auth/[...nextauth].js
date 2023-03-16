@@ -14,7 +14,7 @@ export const authOptions = {
       credentials: {
         password: { label: "Keyword", type: "text", placeholder: "password here" }
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         if (credentials.password === "test")
           return {
             id: 1,

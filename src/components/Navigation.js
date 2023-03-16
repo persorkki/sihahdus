@@ -8,7 +8,6 @@ import ProtectedLink from './Navigation/ProtectedLink'
 import LoginButton from './Navigation/LoginButton'
 
 import { useRouter } from 'next/router'
-import { useState } from 'react'
 import { useSession, signIn, signOut } from "next-auth/react";
 
 function Navigation() {

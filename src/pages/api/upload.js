@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { PrismaClient } from "@prisma/client";
+//import { PrismaClient } from "@prisma/client";
 import path from 'path'
 import { IncomingForm } from "formidable"
 

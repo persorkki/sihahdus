@@ -59,7 +59,7 @@ export default function Upload() {
     setUploadStatus(status.UPLOADING)
     const formData = new FormData();
     await sleep(1000);
-    console.log(file);
+    //console.log(file);
     formData.append("uploadFile", file)
     /* 
     https://stackoverflow.com/a/46640744
@@ -77,7 +77,7 @@ export default function Upload() {
         */
         body: formData,
       })
-    console.log(response);
+    //console.log(response);
     if (!response.ok) {
       switch (response.status) {
         // unprocessable entity
