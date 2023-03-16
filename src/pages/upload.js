@@ -31,6 +31,10 @@ const status = {
   FAIL_PAYLOAD_TOO_LARGE: {
     text: "file is too big",
     style: styles.statusFail
+  },
+  FAIL_FILE_ALREADY_EXISTS: {
+    text: "file already exists on the server",
+    style: styles.statusFail
   }
 }
 
@@ -76,7 +80,7 @@ export default function Upload() {
         */
         body: formData,
       })
-
+      const data = await response.json();
     if (!response.ok) {
       switch (response.status) {
         // unprocessable entity
@@ -87,12 +91,16 @@ export default function Upload() {
         case (413):
           setUploadStatus(status.FAIL_PAYLOAD_TOO_LARGE);
           break;
+        // conflict
+        case (409):
+          setUploadStatus(status.FAIL_FILE_ALREADY_EXISTS);
+          setFilenameText(data.existingFile.remoteFilepath);
+          break;
       }
       return;
     }
-    const data = await response.json();
-    setFilenameText(data.fileObject.remoteFilepath);
     setUploadStatus(status.SUCCESS)
+    setFilenameText(data.fileObject.remoteFilepath);
     return;
   }
 

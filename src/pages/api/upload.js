@@ -1,6 +1,6 @@
 import path from 'path'
 import { IncomingForm } from "formidable"
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Prisma } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export const config = {
@@ -60,8 +60,21 @@ export default async function handler(req, res) {
         */
         await prisma.file.create({
             data: fileObject
-        }).then(res => console.log(res))
-        console.log(fileObject);
-        return res.status(200).json({ fileObject });
+        }).then(() => {
+            return res.status(200).json({ fileObject });
+        })
+            .catch(async (err) => {
+                console.log(err);
+                // if md5 already exists on the server we return the existing file
+                if (err.code === 'P2002') {
+                    const existingFile = await prisma.file.findUnique({
+                        where: {
+                            md5: fileObject.md5
+                        }
+                    })
+                    return res.status(409).json({ existingFile });
+                }
+            });
+
     })
 }
