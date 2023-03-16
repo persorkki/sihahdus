@@ -36,6 +36,7 @@ $nav-text-color: $color-bg;
         }
         .current {
             position:relative;
+            
             /* TEMPORARY FOR TESTING ONLY */
             @mixin content-setup {
                 color: $color-special;
@@ -57,7 +58,6 @@ $nav-text-color: $color-bg;
                 position: absolute;
                 right: 8px;
             }
-
             @media screen and (max-width: $mobile-screen-size) { 
                 li::before {
                     @include content-setup;

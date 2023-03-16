@@ -17,6 +17,7 @@
 .statusbox {
     
     display: flex;
+    justify-content: center;
     flex-direction: column;
     
     text-align: center;
@@ -34,13 +35,28 @@
     }
 }
 
+
 .statusfn {
-    //background-color: $rich-black;
+    
+    line-height: 32px;
+    border: 1px solid $rich-black;
+    background-color: $ghost-white;
     color: $rich-black;
+    padding-left: 1em;
+    padding-right: 1em;
+
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-
+    width: 100%;
+    height: 2em;
+    
+    &:hover {
+        cursor: pointer;
+        
+        background-color: $rich-black;
+        color: $ghost-white;
+    }
 }
 
 

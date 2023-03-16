@@ -48,12 +48,12 @@ export default function Upload() {
   const [uploadStatus, setUploadStatus] = useState(status.DEFAULT);
   const [drag, setDrag] = useState(false);
   const [fileBlob, setFileBlob] = useState(null);
-  const [filenameText, setFilenameText] = useState("...");
+  const [filenameText, setFilenameText] = useState("");
 
   useEffect(() => {
     if (file) {
       setFileBlob(URL.createObjectURL(file))
-      setFilenameText(file.name);
+      //setFilenameText(file.name);
     }
   }, [file]);
 
@@ -124,16 +124,15 @@ export default function Upload() {
         onDragOver={(e) => { e.preventDefault(); e.stopPropagation() }}
         onDrop={(e) => { e.preventDefault(); e.stopPropagation() }} >
 
-
         <div className={styles.formcontent}>
           <form onSubmit={(uploadFile)}>
             <div className={styles.statusbox}>
               <p className={uploadStatus.style}>{uploadStatus.text}</p>
-              <div className={styles.statusfn}
-                style={file ? { visibility: "visible" } : { visibility: "hidden" }}>
-                {filenameText}
-                {/*file ? file.name : "..."*/}
-              </div>
+                <div className={styles.statusfn}
+                style={filenameText ? { visibility: "visible" } : { visibility: "hidden" }}>
+                  {/* TODO: this is very ugly, should be changed */}
+                  {filenameText}   
+                </div>
             </div>
             <div className={styles.uploadboxcontainer}>
               {/*file && <img src={URL.createObjectURL(file)}/>*/}

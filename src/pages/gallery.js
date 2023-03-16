@@ -58,12 +58,14 @@ export default function Gallery({ imageData }) {
 
       <main className={`${home.content} ${styles.content}`}>
         {/*<Banner>Gallery</Banner>*/}
+        {/* 
         <p>
           copy
           link by
           <span> {copyText} </span>
           image
         </p>
+        */}
         <div className={styles.gallery}>
           {imageData.map((e) => (
             <div key={e.id} className={styles.galleryImage}>

@@ -4,6 +4,7 @@ import Image from "next/image"
 import GitHubImage from "public/github-mark-white.svg"
 import DigitalOceanImage from "public/DO_Logo_icon_blue.svg"
 function Footer() {
+    /* TODO: extract footer links into their own reusable component */
     return (
         <>
             <div className={styles.content}>
