@@ -32,7 +32,13 @@ yarn-error.log*
 .env
 # vercel
 .vercel
-/public
+
+#
+public/*
+!public/sihahdus.ico
+!public/sihahdus.svg
+
+
 /.vs
 
 src/styles/oldc.css
