@@ -8,6 +8,6 @@ export default function ProtectedLink({ route, checkRoute, children }) {
                     {children}
                 </li>
             </Link>
-        </> 
+        </>
     )
 }

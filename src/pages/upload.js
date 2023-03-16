@@ -12,6 +12,10 @@ const status = {
     text: "ready to upload",
     style: styles.statusIdle
   },
+  COPIED: {
+    text: "link copied to clipboard",
+    style: styles.statusSuccess
+  },
   UPLOADING: {
     text: "uploading...",
     style: styles.statusUploading
@@ -57,11 +61,20 @@ export default function Upload() {
     }
   }, [file]);
 
+  const copyToClipboard = (text) => {
+    setUploadStatus(status.COPIED)
+    navigator.clipboard.writeText(text);
+  }
+
   async function uploadFile(e) {
     e.preventDefault();
     setUploadStatus(status.UPLOADING)
     const formData = new FormData();
-    await sleep(1000);
+
+    //TODO: dev only
+    if (process.env.NODE_ENV === 'development') {
+      await sleep(1000);
+    }
     //console.log(file);
     formData.append("uploadFile", file)
     /* 
@@ -80,7 +93,7 @@ export default function Upload() {
         */
         body: formData,
       })
-      const data = await response.json();
+    const data = await response.json();
     if (!response.ok) {
       switch (response.status) {
         // unprocessable entity
@@ -128,11 +141,11 @@ export default function Upload() {
           <form onSubmit={(uploadFile)}>
             <div className={styles.statusbox}>
               <p className={uploadStatus.style}>{uploadStatus.text}</p>
-                <div className={styles.statusfn}
+              <div onClick={() => { copyToClipboard(filenameText) }} className={styles.statusfn}
                 style={filenameText ? { visibility: "visible" } : { visibility: "hidden" }}>
-                  {/* TODO: this is very ugly, should be changed */}
-                  {filenameText}   
-                </div>
+                {/* TODO: this is very ugly, should be changed */}
+                {filenameText}
+              </div>
             </div>
             <div className={styles.uploadboxcontainer}>
               {/*file && <img src={URL.createObjectURL(file)}/>*/}

@@ -5,7 +5,7 @@ export default function LoginButton({ login, session }) {
 
     return (
         <>
-            
+
             { /* 
             TODO: figure out firefox issue or if there is one
             <Link onClick={() => Router.push("/auth/signin?#")} href="#"> 

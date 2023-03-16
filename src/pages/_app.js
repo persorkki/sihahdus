@@ -10,12 +10,12 @@ const font = Fira_Sans({
   weight: '400'
 })
 
-export default function App({ Component, pageProps: {session, ...pageProps} }) {
+export default function App({ Component, pageProps: { session, ...pageProps } }) {
   return (
     <main className={font.className}>
       <SessionProvider session={session}>
-      <Layout>
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
         </Layout>
       </SessionProvider>
     </main>

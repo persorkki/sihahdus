@@ -58,7 +58,7 @@ export default async function handler(req, res) {
             return res.status(422).end()
         }
         */
-        
+
         // TODO: docs suggest using try-catch instead of .then .catch
         await prisma.file.create({
             data: fileObject

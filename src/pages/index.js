@@ -10,7 +10,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/sihahdus.ico" />
       </Head>
-      
+
       <main className={styles.content}>
         <h1 className={styles.title}>Hey, <span>you!</span></h1>
         <h2>...welcome</h2>

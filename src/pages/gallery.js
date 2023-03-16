@@ -32,21 +32,21 @@ export default function Gallery({ imageData }) {
     console.log(target);
   };
   */
-  
+
   /* localhost is setup in next.config.js as domain */
   const galleryLoader = ({ src, quality }) => `${src}?q=${quality || 50}`;
 
   const [copyText, setCopyText] = useState("clicking")
 
-  useEffect(()=> {
+  useEffect(() => {
     window.addEventListener('resize', () => {
       if (window.innerWidth < 700)
         setCopyText("touching");
       else
         setCopyText("clicking");
     })
- }, [])
-  
+  }, [])
+
   return (
     <>
       <Head>
@@ -71,7 +71,7 @@ export default function Gallery({ imageData }) {
             <div key={e.id} className={styles.galleryImage}>
               <Image loader={galleryLoader} key={e.id} className={styles.image} src={`/${e.filename}`} width={100} height={100} alt={e.filename} />
             </div>
-            ))
+          ))
           }
         </div>
 
