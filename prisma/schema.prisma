@@ -11,11 +11,19 @@ datasource db {
 }
 
 model File {
-  id   Int    @id @default(autoincrement())
-  mime String
-  md5 String @unique
-  filename String
-  size Int
-  localFilepath String @unique
+  id             Int    @id @default(autoincrement())
+  mime           String
+  md5            String @unique
+  filename       String
+  size           Int
+  localFilepath  String @unique
   remoteFilepath String @unique
+}
+
+model Message {
+  id Int @id @default(autoincrement())
+  // if not isOnline, it's an offline message
+  isOnline Boolean
+  text String
+  remoteFilepath String
 }

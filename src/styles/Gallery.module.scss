@@ -4,7 +4,7 @@
     width: 100vw;
     margin-left: 50%;
     transform: translateX(-50%);
-
+    
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -52,6 +52,7 @@
 
 .content {
     text-align: center;
+    margin: 0.5em;
 }
 
 .galleryImage{
