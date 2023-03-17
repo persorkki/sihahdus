@@ -1,6 +1,6 @@
 import path from 'path'
 import { IncomingForm } from "formidable"
-import { PrismaClient, Prisma } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export const config = {
