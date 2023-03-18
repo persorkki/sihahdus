@@ -1,5 +1,17 @@
 @import "./variables.scss";
 
+.preview {
+text-align: center;
+
+  width:auto;
+  height:160px;
+  
+  display: block;
+  margin: 0 auto;
+  margin-top: 1em;
+ 
+}
+
 .messageTable {
   font-family: "Fira Sans";
   font-size: 14px;
@@ -8,6 +20,12 @@
   margin-top: 1em;
   border: 1px solid rgb(221, 221, 221);
   padding: 0.25em;
+
+  th {
+    font-weight: 500;
+    background-color: rgb(221, 221, 221);
+    color:$rich-black;
+  }
 }
 
 @mixin msg {
@@ -30,6 +48,7 @@
       border: 1px solid $process-cyan;
     }
   }
+
 }
 .newMessage {
   @include msg;

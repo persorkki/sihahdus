@@ -1,4 +1,3 @@
-
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
@@ -56,19 +55,5 @@ export default async function handler(req, res) {
 
     }
 
-
-
-
-    /*
-    await prisma.message.create(
-        {
-            data: {
-                text: data.text,
-                isOnline: data.isOnline,
-                remoteFilepath: data.remoteFilepath
-            }
-        }
-      )
-      */
     return res.status(200).json({ message: "hello" })
 }

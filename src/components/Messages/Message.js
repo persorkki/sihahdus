@@ -1,7 +1,5 @@
 import { useState } from "react";
-
-export default function Message({ id, text, remoteFilepath, isOnline, saveHandler, deleteHandler, className }) {
-
+export default function Message({ id, text, remoteFilepath, isOnline, saveHandler, deleteHandler, className, previewStateHandler}) {
 
     const [onlineStatus, setOnlineStatus] = useState(isOnline);
     const [message, setMessage] = useState(text);
@@ -15,7 +13,7 @@ export default function Message({ id, text, remoteFilepath, isOnline, saveHandle
     }
 
     const onSave = (e) => {
-        id == 0 ? "" :setIsDisabled(true)
+        id == 0 ? "" : setIsDisabled(true)
         saveHandler(id, message, url, onlineStatus)
         if (!deleteHandler) {
             clearFields();
@@ -41,10 +39,21 @@ export default function Message({ id, text, remoteFilepath, isOnline, saveHandle
     return (
         <tr className={className}>
             <td>
-                <input type="text" disabled={isDisabled} value={message} onChange={onMessageChange} />
+                <input
+                    type="text"
+                    disabled={isDisabled}
+                    value={message}
+                    onChange={onMessageChange} />
             </td>
-            <td>
-                <input type="url" disabled={isDisabled} value={url} onChange={onURLChange} />
+            <td onMouseLeave={() => previewStateHandler(false, "")}
+                onMouseOver={() => previewStateHandler(true, url)}>
+                <input
+                    type="url"
+                    disabled={isDisabled}
+                    value={url} onChange={onURLChange}
+                    
+                    
+                />
             </td>
             <td><input type="radio" disabled={isDisabled} name={`status__${id}`} value="online" checked={onlineStatus} onChange={onRadioChange} /></td>
             <td><input type="radio" disabled={isDisabled} name={`status__${id}`} value="offline" checked={!onlineStatus} onChange={onRadioChange} /></td>
@@ -60,14 +69,14 @@ export default function Message({ id, text, remoteFilepath, isOnline, saveHandle
                 }
                 { /*<button onClick={onSave}>{deleteHandler ? "save" : "add"}</button> */}
             </td>
-            
+
             <td>
                 {
                     id == 0 ?
-                    <button style={{ visibility: "hidden" }} >delete</button>:
-                    <button style={isDisabled ? { visibility: "hidden" } : { visibility: "visible" }} onClick={onDelete}>delete</button>
+                        <button style={{ visibility: "hidden" }} >delete</button> :
+                        <button style={isDisabled ? { visibility: "hidden" } : { visibility: "visible" }} onClick={onDelete}>delete</button>
                 }
-                 
+
             </td>
         </tr>
     )

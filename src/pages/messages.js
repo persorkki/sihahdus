@@ -3,11 +3,11 @@ import styles from "../styles/Messages.module.scss";
 
 /* Components */
 import Message from "../components/Messages/Message";
-import Preview from "@/components/Messages/Preview";
-import ErrorView from "@/components/ErrorView";
+import ErrorView from "../components/ErrorView";
 /* react / nextjs */
 import { useState } from "react";
 import { useSession } from "next-auth/react"
+import Image from "next/image";
 /* external imports */
 import { PrismaClient } from "@prisma/client";
 
@@ -21,15 +21,23 @@ export async function getServerSideProps() {
     };
 }
 
-export default function Messages({ session, messageData }) {
-    if (!session) {
-        return (
-          <>
-            <ErrorView></ErrorView>
-          </>
-        )
-      }
+export default function Messages({ messageData }) {
     const [messages, setMessages] = useState(messageData);
+    /* TODO: combine into an object? */
+    const [previewState, setPreviewState] = useState({
+        show: false,
+        url: null,
+    })
+    const [showPreview, setShowPreview] = useState(false);
+    const [previewURL, setPreviewURL] = useState(null);
+    const previewStateHandler = (show, url) => {
+        if (show && url != null && url != "") {
+            setPreviewState({ show: show, url: url })
+            return;
+        }
+    }
+
+
     async function updateMessage(id, text, remoteFilepath, isOnline) {
         const messageObject = {
             id,
@@ -86,11 +94,18 @@ export default function Messages({ session, messageData }) {
             setMessages(messages.filter(x => x.id != id))
         }
     }
-
+    const { data: session } = useSession()
+    if (!session) {
+        return (
+            <>
+                <ErrorView></ErrorView>
+            </>
+        )
+    }
     return (
 
         <>
-            <Preview />
+            {previewState.show && <Image className={styles.preview} src={previewState.url} alt="preview image" width={100} height={100} />}
             <table className={styles.messageTable}>
                 <thead>
                     <tr className={styles.newMessage}>
@@ -111,6 +126,7 @@ export default function Messages({ session, messageData }) {
                         remoteFilepath=""
                         isOnline={false}
                         saveHandler={saveMessage}
+                        previewStateHandler={previewStateHandler}
                     />
                     {
                         messages.slice(0).reverse().map((e) => {
@@ -124,6 +140,8 @@ export default function Messages({ session, messageData }) {
                                     isOnline={e.isOnline}
                                     saveHandler={updateMessage}
                                     deleteHandler={deleteMessage}
+                                    previewStateHandler={previewStateHandler}
+
                                 />
                             );
                         })
