@@ -36,6 +36,8 @@ yarn-error.log*
 public/*
 !public/sihahdus.ico
 !public/sihahdus.svg
+!public/github-mark-white.svg
+!public/DO_Logo_icon_blue.svg
 
 /.vs
 
