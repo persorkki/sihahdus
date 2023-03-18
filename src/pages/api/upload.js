@@ -30,6 +30,7 @@ export default async function handler(req, res) {
         maxFileSize: 5 * 1024 * 1024,
         hashAlgorithm: 'md5',
     }
+    console.log(options);
     const form = new IncomingForm(options);
     form.parse(req, async (err, fields, files) => {
         if (err) {
