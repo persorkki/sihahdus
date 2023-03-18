@@ -21,7 +21,6 @@ export default function Message({ id, text, remoteFilepath, isOnline, saveHandle
             clearFields();
         }
 
-
     }
     const onDelete = (e) => {
         deleteHandler(id, message, url, onlineStatus)

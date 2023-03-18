@@ -2,12 +2,12 @@
 import styles from "../styles/Messages.module.scss";
 
 /* Components */
-import Message from "../components/Messages/Message"
-import Preview from "../components/Messages/Preview"
-
-/* react */
+import Message from "../components/Messages/Message";
+import Preview from "@/components/Messages/Preview";
+import ErrorView from "@/components/ErrorView";
+/* react / nextjs */
 import { useState } from "react";
-
+import { useSession } from "next-auth/react"
 /* external imports */
 import { PrismaClient } from "@prisma/client";
 
@@ -21,7 +21,14 @@ export async function getServerSideProps() {
     };
 }
 
-export default function Messages({ messageData }) {
+export default function Messages({ session, messageData }) {
+    if (!session) {
+        return (
+          <>
+            <ErrorView></ErrorView>
+          </>
+        )
+      }
     const [messages, setMessages] = useState(messageData);
     async function updateMessage(id, text, remoteFilepath, isOnline) {
         const messageObject = {
