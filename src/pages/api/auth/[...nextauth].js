@@ -1,6 +1,8 @@
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 
+const secret = process.env.NEXTAUTH_SECRET
+
 export const authOptions = {
   // Configure one or more authentication providers
   pages: {
@@ -15,7 +17,7 @@ export const authOptions = {
         password: { label: "Keyword", type: "text", placeholder: "password here" }
       },
       async authorize(credentials) {
-        if (credentials.password === "test")
+        if (credentials.password === secret)
           return {
             id: 1,
             username: "sihahtaja"
