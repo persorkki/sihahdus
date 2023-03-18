@@ -47,7 +47,7 @@ export default async function handler(req, res) {
             size: file.size,
             localFilepath: file.filepath,
             //TODO: to env...
-            remoteFilepath: "http://localhost:3000/" + encodeURI(file.newFilename)
+            remoteFilepath: process.env.PUBLIC_FILE_LOCATION  + encodeURI(file.newFilename)
         }
         /*
         TODO: do we want to compress gifs?
