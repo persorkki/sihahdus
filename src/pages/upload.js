@@ -94,6 +94,7 @@ export default function Upload() {
         body: formData,
       })
     const data = await response.json();
+    console.log(data);
     if (!response.ok) {
       switch (response.status) {
         // unprocessable entity
