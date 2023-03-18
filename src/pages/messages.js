@@ -1,6 +1,16 @@
-import { use, useState } from "react";
+/* Styles */
 import styles from "../styles/Messages.module.scss";
+
+/* Components */
+import Message from "../components/Messages/Message"
+import Preview from "../components/Messages/Preview"
+
+/* react */
+import { useState } from "react";
+
+/* external imports */
 import { PrismaClient } from "@prisma/client";
+
 
 const prisma = new PrismaClient()
 
@@ -8,113 +18,115 @@ export async function getServerSideProps() {
     const messageData = await prisma.message.findMany()
     return {
         props: { messageData: messageData },
-        //TODO: maybe use getStaticProps for this? revalidate on create/destroy?
-        //revalidate: 10
     };
 }
 
 export default function Messages({ messageData }) {
-
-    function saveMessage(id, text, remoteFilepath, isOnline) {
-        /*TODO: save to DB here*/
-        console.log(id, text, remoteFilepath, isOnline);
+    const [messages, setMessages] = useState(messageData);
+    async function updateMessage(id, text, remoteFilepath, isOnline) {
+        const messageObject = {
+            id,
+            text,
+            remoteFilepath,
+            isOnline
+        }
+        const result = await fetch('/api/message', {
+            method: "PUT",
+            headers: { headers: { "Content-Type": "application/json" } },
+            body: JSON.stringify(messageObject)
+        })
+        
+        if (result.ok) {
+            setMessages(messages.map(x => x.id == id ? messageObject : x))
+        }
     }
 
+    async function saveMessage(id, text, remoteFilepath, isOnline) {
+        /* actually creates a new message */
+        const messageObject = {
+            id: messages.length+1,
+            text,
+            remoteFilepath,
+            isOnline
+        }
+        const result = await fetch('/api/message', {
+            method: "POST",
+            headers: { headers: { "Content-Type": "application/json" } },
+            body: JSON.stringify(messageObject)
+        })
+        
+        if (result.ok) {
+            setMessages([...messages, messageObject])
+        }
+    }
+
+    async function deleteMessage(id, text, remoteFilepath, isOnline) {
+        if (id == 0) return;
+
+        const messageObject = {
+            id,
+            text,
+            remoteFilepath,
+            isOnline
+        }
+        const result = await fetch('/api/message', {
+            method: "DELETE",
+            headers: { headers: { "Content-Type": "application/json" } },
+            body: JSON.stringify(messageObject)
+        })
+        
+        if (result.ok) {
+            setMessages( messages.filter(x => x.id != id))
+        }
+    }
+    
+
     return (
+
         <>
-            <div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Message</th>
-                            <th>URL</th>
-                            <th>Online</th>
-                            <th>Offline</th>
-                        </tr>
-                    </thead>
-                    <tbody >
-                        {
-                            messageData.map((e) => {
-                                return (
-                                    <Message
-                                        key={e.id}
-                                        id={e.id}
-                                        text={e.text}
-                                        remoteFilepath={e.remoteFilepath}
-                                        isOnline={e.isOnline}
-                                        saveHandler={saveMessage}/>
-                                );
-                            })
-                        }
-                    </tbody>
-                </table>
-            </div>
+            <Preview/>
+            <table className={styles.messageTable}>
+                <thead>
+                    <tr className={styles.newMessage}>
+                        <th>message</th>
+                        <th>URL</th>
+                        <th>on</th>
+                        <th>off</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody >
+                    <Message
+                        className={styles.newMessage}
+                        key={0}
+                        id={0}
+                        text=""
+                        remoteFilepath=""
+                        isOnline={false}
+                        /*TODO: maybe different handler for this one? */
+                        saveHandler={saveMessage}
+                    />
+
+                    {
+                        messages.slice(0).reverse().map((e) => {
+                            return (
+                                <Message
+                                    className={styles.message}
+                                    key={e.id}
+                                    id={e.id}
+                                    text={e.text}
+                                    remoteFilepath={e.remoteFilepath}
+                                    isOnline={e.isOnline}
+                                    /* TODO: updateMessage */
+                                    saveHandler={updateMessage}
+                                    deleteHandler={deleteMessage}
+                                />
+                            );
+                        })
+                    }
+                </tbody>
+            </table>
         </>
     )
 }
-
-function Message({ id, text, remoteFilepath, isOnline, saveHandler }) {
-    console.log(isOnline);
-    const [onlineStatus, setOnlineStatus] = useState(isOnline);
-    const [message, setMessage] = useState(text);
-    const [url, setURL] = useState(remoteFilepath);
-    const onSave = (e) => {
-        saveHandler(id, message, url, onlineStatus)
-    }
-
-    const onMessageChange = (e) => {
-        setMessage(e.target.value);
-    }
-
-    const onURLChange = (e) => {
-        setURL(e.target.value);
-    }
-
-    const onRadioChange = (e) => {
-        setOnlineStatus(e.target.value === "online")
-    }
-    return (
-        <tr>
-
-            <td>
-                <input type="text" value={message} onChange={onMessageChange} />
-            </td>
-            <td>
-                <input type="url" value={url} onChange={onURLChange} />
-            </td>
-            <td><input type="radio" name={`status__${id}`} value="online" checked={onlineStatus} onChange={onRadioChange} /></td>
-            <td><input type="radio" name={`status__${id}`} value="offline" checked={!onlineStatus} onChange={onRadioChange} /></td>
-
-            { /*TODO: maybe add a button to "unlock" a message object first, then show the "save" button instead. */}
-            <td><button onClick={onSave}>save</button></td>
-        </tr>
-    )
-}
-
-
-
-{/* 
-                <form>
-                    <div className={styles.innerContainer}>
-                        <div className={styles.block}>
-                            <label htmlFor="text">message: </label>
-                            <input id="text" type="text" required />
-                        </div>
-                        <div className={styles.block}>
-                            <label htmlFor="url">image URL </label>
-                            <input id="url" type="url" required />
-                        </div>
-                        <div className={styles.block}>
-                            <label htmlFor="online">online</label>
-                            <input name="onoff" id="online" type="radio" required />
-                        </div>
-                        <div className={styles.block}>
-                            <label htmlFor="online">online</label>
-                            <input name="onoff" id="online" type="radio" />
-                        </div>
-                        <div className={styles.block}>
-                            <button className={styles.submitButton} type="submit">submit</button>
-                        </div>
-                    </div>
-                </form>
-                */ }
