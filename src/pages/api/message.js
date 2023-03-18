@@ -1,19 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-async function devAddToDB(data) {
-
-    await prisma.message.create(
-        {
-            data: {
-                text: data.text,
-                isOnline: data.isOnline === "true",
-                remoteFilepath: data.remoteFilepath
-            }
-        }
-    )
-}
-
 export default async function handler(req, res) {
 
     if (req.method === 'GET') {
