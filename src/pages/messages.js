@@ -20,23 +20,32 @@ export async function getServerSideProps() {
         props: { messageData: messageData },
     };
 }
+// TODO: other protected pages should probably follow this style
+export default function Loader({messageData}) {
+    const { data: session } = useSession()
+    if (!session) {
+        return (
+            <>
+                <ErrorView></ErrorView>
+            </>
+        )
+    }
+    return <Messages messageData={messageData} />
+}
+function Messages({ messageData }) {
 
-export default function Messages({ messageData }) {
     const [messages, setMessages] = useState(messageData);
     /* TODO: combine into an object? */
     const [previewState, setPreviewState] = useState({
         show: false,
         url: null,
     })
-    const [showPreview, setShowPreview] = useState(false);
-    const [previewURL, setPreviewURL] = useState(null);
     const previewStateHandler = (show, url) => {
         if (show && url != null && url != "") {
             setPreviewState({ show: show, url: url })
             return;
         }
     }
-
 
     async function updateMessage(id, text, remoteFilepath, isOnline) {
         const messageObject = {
@@ -94,17 +103,15 @@ export default function Messages({ messageData }) {
             setMessages(messages.filter(x => x.id != id))
         }
     }
-    const { data: session } = useSession()
-    if (!session) {
-        return (
-            <>
-                <ErrorView></ErrorView>
-            </>
-        )
-    }
+
     return (
 
         <>
+            {/*
+            TODO:: this is a temporary solution 
+            FIXME: hovering over input while it has some text but not a valid url breaks the whole mouseover thing
+            FIXME: mouseleave doesn't work (look at previewStateHandler conditions)
+            */}
             {previewState.show && <Image className={styles.preview} src={previewState.url} alt="preview image" width={100} height={100} />}
             <table className={styles.messageTable}>
                 <thead>
