@@ -35,7 +35,7 @@ export default function Messages({ messageData }) {
             headers: { headers: { "Content-Type": "application/json" } },
             body: JSON.stringify(messageObject)
         })
-        
+
         if (result.ok) {
             setMessages(messages.map(x => x.id == id ? messageObject : x))
         }
@@ -44,7 +44,7 @@ export default function Messages({ messageData }) {
     async function saveMessage(id, text, remoteFilepath, isOnline) {
         /* actually creates a new message */
         const messageObject = {
-            id: messages.length+1,
+            id: messages.length + 1,
             text,
             remoteFilepath,
             isOnline
@@ -54,7 +54,7 @@ export default function Messages({ messageData }) {
             headers: { headers: { "Content-Type": "application/json" } },
             body: JSON.stringify(messageObject)
         })
-        
+
         if (result.ok) {
             setMessages([...messages, messageObject])
         }
@@ -74,17 +74,16 @@ export default function Messages({ messageData }) {
             headers: { headers: { "Content-Type": "application/json" } },
             body: JSON.stringify(messageObject)
         })
-        
+
         if (result.ok) {
-            setMessages( messages.filter(x => x.id != id))
+            setMessages(messages.filter(x => x.id != id))
         }
     }
-    
 
     return (
 
         <>
-            <Preview/>
+            <Preview />
             <table className={styles.messageTable}>
                 <thead>
                     <tr className={styles.newMessage}>
@@ -104,10 +103,8 @@ export default function Messages({ messageData }) {
                         text=""
                         remoteFilepath=""
                         isOnline={false}
-                        /*TODO: maybe different handler for this one? */
                         saveHandler={saveMessage}
                     />
-
                     {
                         messages.slice(0).reverse().map((e) => {
                             return (
@@ -118,7 +115,6 @@ export default function Messages({ messageData }) {
                                     text={e.text}
                                     remoteFilepath={e.remoteFilepath}
                                     isOnline={e.isOnline}
-                                    /* TODO: updateMessage */
                                     saveHandler={updateMessage}
                                     deleteHandler={deleteMessage}
                                 />
