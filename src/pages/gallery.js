@@ -36,6 +36,7 @@ export default function Gallery({ imageData }) {
   /* localhost is setup in next.config.js as domain */
   const galleryLoader = ({ src, quality }) => `${src}?q=${quality || 50}`;
 
+  /*
   const [copyText, setCopyText] = useState("clicking")
 
   useEffect(() => {
@@ -46,7 +47,7 @@ export default function Gallery({ imageData }) {
         setCopyText("clicking");
     })
   }, [])
-
+  */
   return (
     <>
       <Head>
@@ -55,17 +56,7 @@ export default function Gallery({ imageData }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/sihahdus.ico" />
       </Head>
-
       <main className={`${home.content} ${styles.content}`}>
-        {/*<Banner>Gallery</Banner>*/}
-        {/* 
-        <p>
-          copy
-          link by
-          <span> {copyText} </span>
-          image
-        </p>
-        */}
         <div className={styles.gallery}>
           {imageData.map((e) => (
             <div key={e.id} className={styles.galleryImage}>
