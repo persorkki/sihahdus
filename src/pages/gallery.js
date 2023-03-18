@@ -5,8 +5,10 @@ import Image from 'next/image';
 import home from '../styles/Home.module.scss';
 import styles from '../styles/Gallery.module.scss';
 // react
+/*
 import { useEffect } from 'react';
 import { useState } from 'react';
+*/
 // others
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient()
