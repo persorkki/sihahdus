@@ -37,7 +37,7 @@ function Navigation() {
                         gallery
                     </li>
                 </Link>
-                {session && <ProtectedLink session={session} route="/configure" checkRoute={checkRoute}>configure</ProtectedLink>}
+                {session && <ProtectedLink session={session} route="/messages" checkRoute={checkRoute}>messages</ProtectedLink>}
                 {session && <ProtectedLink session={session} route="/upload" checkRoute={checkRoute}>upload</ProtectedLink>}
             </ul>
             {session ?

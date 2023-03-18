@@ -1,0 +1,40 @@
+@import "./variables.scss";
+
+
+.messageContainer {
+    display: flex;
+
+}
+
+
+.innerContainer {
+    margin-top: 1.5em;
+
+    display: flex;
+    gap: 0.5em;
+    justify-content: space-evenly;
+    padding: 0.5em;
+    //border: 1px solid $rich-black;
+    background-color: grey;
+    font-size: 14px;
+}
+
+.block {
+    display: inline-block;
+    
+    text-align: center;
+    padding: 2px;
+    background-color: antiquewhite;
+    
+    
+}
+
+.submitButton {
+    height: 100%;
+    
+    
+}
+
+.textInput {
+    
+}

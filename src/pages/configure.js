@@ -63,8 +63,18 @@ export default function Configure({ messageData }) {
   const onSubmitMessage = async (e) => {
     e.preventDefault();
     const messageObject = getMessageObject();
-    
-    console.log(messageObject);
+    const response = await fetch('/api/message',
+    {
+      method: "POST",
+      /* 
+         https://stackoverflow.com/a/46640744
+         headers: headers 
+      */
+      body: JSON.stringify(messageObject)
+      })
+    console.log(response);
+    const data = await response.json();
+    console.log(data);
   }
     if (!session) {
       return (
@@ -129,7 +139,13 @@ export default function Configure({ messageData }) {
           </div>
         
           <div>
-            {messageData.map(() => { console.log(messageData); })}
+            {/*TODO: extract into component, give the ability to destroy a message*/}
+            {messageData.map((e) => (
+            <div key={e.id} >
+                <p>{e.text} {e.remoteFilepath}</p>
+            </div>
+          ))
+          }
           </div>
         </main>
       </>
