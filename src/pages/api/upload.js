@@ -34,6 +34,7 @@ export default async function handler(req, res) {
     const form = new IncomingForm(options);
     form.parse(req, async (err, fields, files) => {
         if (err) {
+            console.log(err);
             if (err.httpCode) {
                 res.status(err.httpCode).end()
             }
