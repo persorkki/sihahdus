@@ -10,18 +10,13 @@ import LoginButton from './Navigation/LoginButton'
 import { useRouter } from 'next/router'
 import { useSession, signIn, signOut } from "next-auth/react";
 
-function Navigation() {
+export default function Navigation() {
     const router = useRouter();
-    //const [session, setSession] = useState(true);
+
     const { data: session } = useSession();
     const checkRoute = (path) => {
         return router.pathname === path ? styles.current : ""
     }
-    /*
-    const login = () => {
-        setSession(!session);
-    }
-    */
 
     return (
         <nav className={styles.navbar}>

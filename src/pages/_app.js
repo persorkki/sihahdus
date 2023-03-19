@@ -4,7 +4,6 @@ import { Fira_Sans } from '@next/font/google'
 import { Layout } from '@/components/Layout'
 import { SessionProvider } from 'next-auth/react';
 
-/* TODO: rename this variable */
 const font = Fira_Sans({
   subsets: ['latin'],
   weight: '400'

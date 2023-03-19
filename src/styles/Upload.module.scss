@@ -1,5 +1,17 @@
 @import "./variables.scss";
 
+.visible {
+    visibility: visible;
+}
+.hidden {
+    visibility: hidden;
+}
+.bg {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    background-origin: padding-box;
+}
 .statusIdle {
     color: $rich-black;
 }

@@ -1,5 +1,5 @@
-import { Navigation } from "./Navigation"
-import { Footer } from "./Footer"
+import Navigation from "./Navigation"
+import Footer from "./Footer"
 import styles from "../styles/Layout.module.scss"
 
 function Layout({ children }) {

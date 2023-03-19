@@ -18,7 +18,6 @@ export default function Message({ id, text, remoteFilepath, isOnline, saveHandle
         if (!deleteHandler) {
             clearFields();
         }
-
     }
     const onDelete = () => {
         deleteHandler(id, message, url, onlineStatus)
@@ -51,25 +50,17 @@ export default function Message({ id, text, remoteFilepath, isOnline, saveHandle
                     type="url"
                     disabled={isDisabled}
                     value={url} onChange={onURLChange}
-
-
                 />
             </td>
             <td><input type="radio" disabled={isDisabled} name={`status__${id}`} value="online" checked={onlineStatus} onChange={onRadioChange} /></td>
             <td><input type="radio" disabled={isDisabled} name={`status__${id}`} value="offline" checked={!onlineStatus} onChange={onRadioChange} /></td>
-
-            { /*TODO: maybe add a button to "unlock" a message object first, then show the "save" button instead. */}
             <td>
                 {
-
                     isDisabled ?
                         <button onClick={() => setIsDisabled(false)}>unlock</button> :
                         <button onClick={onSave}>{id == 0 ? "create" : "save"}</button>
-
                 }
-                { /*<button onClick={onSave}>{deleteHandler ? "save" : "add"}</button> */}
             </td>
-
             <td>
                 {
                     id == 0 ?

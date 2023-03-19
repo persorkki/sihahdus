@@ -1,13 +1,17 @@
 import path from 'path'
 import { IncomingForm } from "formidable"
 import { PrismaClient } from "@prisma/client";
+
 const prisma = new PrismaClient();
+const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5M
 
 export const config = {
     api: {
         bodyParser: false,
     }
 }
+
+
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
@@ -23,11 +27,9 @@ export default async function handler(req, res) {
         // this too
         keepExtensions: true,
         allowEmptyFiles: false,
-        // TODO: needs to be env var
+        // TODO: public needs to be env var
         uploadDir: path.join(process.cwd(), "public"),
-        // default is 200 * 1024 * 1024
-        // TODO: move to a constant (env var?)
-        maxFileSize: 5 * 1024 * 1024,
+        maxFileSize: MAX_FILE_SIZE,
         hashAlgorithm: 'md5',
     }
     console.log(options);
@@ -48,7 +50,6 @@ export default async function handler(req, res) {
             filename: file.newFilename,
             size: file.size,
             localFilepath: file.filepath,
-            //TODO: to env...
             remoteFilepath: process.env.PUBLIC_FILE_LOCATION  + encodeURI(file.newFilename)
         }
         /*

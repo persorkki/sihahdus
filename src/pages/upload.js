@@ -45,9 +45,19 @@ const status = {
 //TODO: remove later, used for simulating delay from server
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-export default function Upload() {
+export default function Loader() {
   const { data: session } = useSession()
+  if (!session) {
+    return (
+      <>
+        <ErrorView></ErrorView>
+      </>
+    )
+  }
+  return <Upload />
+}
 
+function Upload() {
   const [file, setFile] = useState(null);
   const [uploadStatus, setUploadStatus] = useState(status.DEFAULT);
   const [drag, setDrag] = useState(false);
@@ -57,7 +67,6 @@ export default function Upload() {
   useEffect(() => {
     if (file) {
       setFileBlob(URL.createObjectURL(file))
-      //setFilenameText(file.name);
     }
   }, [file]);
 
@@ -75,7 +84,6 @@ export default function Upload() {
     if (process.env.NODE_ENV === 'development') {
       await sleep(1000);
     }
-    //console.log(file);
     formData.append("uploadFile", file)
     /* 
     https://stackoverflow.com/a/46640744
@@ -93,8 +101,9 @@ export default function Upload() {
         */
         body: formData,
       })
+    //FIXME: 413 doesnt work
     const data = await response.json();
-    console.log(data);
+
     if (!response.ok) {
       switch (response.status) {
         // unprocessable entity
@@ -118,13 +127,6 @@ export default function Upload() {
     return;
   }
 
-  if (!session) {
-    return (
-      <>
-        <ErrorView></ErrorView>
-      </>
-    )
-  }
   return (
     <>
       <Head>
@@ -133,7 +135,6 @@ export default function Upload() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/sihahdus.ico" />
       </Head>
-
       <main className={home.content}
         onDragOver={(e) => { e.preventDefault(); e.stopPropagation() }}
         onDrop={(e) => { e.preventDefault(); e.stopPropagation() }} >
@@ -142,56 +143,38 @@ export default function Upload() {
           <form onSubmit={(uploadFile)}>
             <div className={styles.statusbox}>
               <p className={uploadStatus.style}>{uploadStatus.text}</p>
-              <div onClick={() => { copyToClipboard(filenameText) }} className={styles.statusfn}
-                style={filenameText ? { visibility: "visible" } : { visibility: "hidden" }}>
-                {/* TODO: this is very ugly, should be changed */}
+              <div
+                onClick={() => { copyToClipboard(filenameText) }}
+                className={`${styles.statusfn} ${filenameText ? styles.visible : styles.hidden}`}>
                 {filenameText}
               </div>
             </div>
             <div className={styles.uploadboxcontainer}>
-              {/*file && <img src={URL.createObjectURL(file)}/>*/}
+
               <label
-                // TODO: move style to a css module or something
-                style={fileBlob ?
-                  {
-                    backgroundImage: fileBlob ? `url(${fileBlob})` : "",
-                    backgroundRepeat: "no-repeat",
-                    backgroundPosition: "center",
-                    backgroundSize: "contain",
-                    backgroundOrigin: "padding-box",
-                  } : {}}
                 onDragLeave={() => { setDrag(false) }}
                 onDragOver={() => { setDrag(true) }}
                 onDrop={(e) => { setFile(e.dataTransfer.files[0]); setDrag(false) }}
-                className={`${styles.uploadbox} ${drag ? styles.dragover : ""}`}
+                className={`${styles.uploadbox} ${drag && styles.dragover} ${styles.bg}`}
+                style={fileBlob && { backgroundImage: `url(${fileBlob})` }}
                 htmlFor="files">
                 {file ? "" : "drag & drop"}
               </label>
+
             </div>
-            {/* 
-          label takes over and we use that as our file input, since htmlFor makes it work
-          file input should probably not use "hidden" and put it in the CSS instead 
-          */}
+
             <input
-              onChange={(e) => { setFile(e.target.files[0]) }} className={styles.fileInput} type="file" name="files" id="files" />
+              onChange={(e) => { setFile(e.target.files[0]) }}
+              className={styles.fileInput}
+              type="file"
+              name="files"
+              id="files" />
 
-            {/*
-          <label htmlFor="abc">name</label>
-          <input type="text" ref={fileBlaRef} name="abc"></input>
-          */}
+            <input
+              className={styles.submitbutton}
+              type="submit"
+              value="upload" />
 
-            <input className={styles.submitbutton} type="submit" value="upload" />
-            {/*
-          <label htmlFor="name">name</label>
-          <input type="text" name="name" id="name"></input>
-        <br/>
-          <label htmlFor="path">path</label>
-          <input type="text" name="path" id="path"></input>
-          <br />
-          <label htmlFor="tags">tags</label>
-          <input type="text" name="tags" id="tags"></input>
-          <button type="submit">--send--</button>
-          */}
           </form>
 
         </div>
