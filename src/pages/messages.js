@@ -7,7 +7,6 @@ import ErrorView from "../components/ErrorView";
 /* react / nextjs */
 import { useState } from "react";
 import { useSession } from "next-auth/react"
-import Image from "next/image";
 /* external imports */
 import { PrismaClient } from "@prisma/client";
 
@@ -35,14 +34,9 @@ export default function Loader({ messageData }) {
 function Messages({ messageData }) {
 
     const [messages, setMessages] = useState(messageData);
-    const [previewState, setPreviewState] = useState({
-        show: false,
-        url: null,
-    })
     //TODO: possibly unneeded, need to figure out the preview thing 
     const previewStateHandler = (show, url) => {
         if (show && url != null && url != "") {
-            setPreviewState({ show: show, url: url })
             return;
         }
     }
