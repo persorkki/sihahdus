@@ -59,7 +59,6 @@ function Messages({ messageData }) {
     async function saveMessage(id, text, remoteFilepath, isOnline) {
         /* actually creates a new message */
         const messageObject = {
-            id: messages.length + 1,
             text,
             remoteFilepath,
             isOnline

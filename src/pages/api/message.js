@@ -10,14 +10,12 @@ export default async function handler(req, res) {
 
     if (req.method === 'POST') {
         const data = await JSON.parse(req.body);
-        console.log(`POST${data.id}`);
         await prisma.message.create({
             data: data
         })
     }
     if (req.method === 'PUT') {
         const data = await JSON.parse(req.body);
-        console.log(`PUT ${data}`);
         await prisma.message.update({
             where: {
                 id: data.id
@@ -27,7 +25,6 @@ export default async function handler(req, res) {
     }
     if (req.method === 'DELETE') {
         const data = await JSON.parse(req.body);
-        console.log(`DELETE ${data}`);
         await prisma.message.delete({
             where: {
                 id: data.id
