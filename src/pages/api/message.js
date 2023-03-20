@@ -1,5 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import prisma from "../../lib/prisma"
 
 export default async function handler(req, res) {
 
@@ -11,7 +10,7 @@ export default async function handler(req, res) {
 
     if (req.method === 'POST') {
         const data = await JSON.parse(req.body);
-        console.log(`POST${data}`);
+        console.log(`POST${data.id}`);
         await prisma.message.create({
             data: data
         })
@@ -27,7 +26,6 @@ export default async function handler(req, res) {
         })
     }
     if (req.method === 'DELETE') {
-
         const data = await JSON.parse(req.body);
         console.log(`DELETE ${data}`);
         await prisma.message.delete({

@@ -10,8 +10,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 */
 // others
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient()
+import prisma from "../lib/prisma"
 //staticprops?
 export async function getServerSideProps() {
   const imageData = await prisma.file.findMany({

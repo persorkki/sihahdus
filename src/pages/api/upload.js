@@ -1,8 +1,8 @@
 import path from 'path'
 import { IncomingForm } from "formidable"
-import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient();
+import prisma from "../../lib/prisma"
+
 const MAX_FILE_SIZE = 50 * 1024 * 1024 // 5M
 
 export const config = {

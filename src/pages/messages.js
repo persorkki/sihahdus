@@ -8,10 +8,7 @@ import ErrorView from "../components/ErrorView";
 import { useState } from "react";
 import { useSession } from "next-auth/react"
 /* external imports */
-import { PrismaClient } from "@prisma/client";
-
-
-const prisma = new PrismaClient()
+import prisma from "../lib/prisma"
 
 export async function getServerSideProps() {
     const messageData = await prisma.message.findMany()
