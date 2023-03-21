@@ -1,5 +1,5 @@
 import { useState } from "react";
-export default function Message({ id, text, remoteFilepath, isOnline, saveHandler, deleteHandler, className, previewStateHandler }) {
+export default function Message({ id, text, remoteFilepath, isOnline, saveHandler, deleteHandler, className }) {
 
     const [onlineStatus, setOnlineStatus] = useState(isOnline);
     const [message, setMessage] = useState(text);
@@ -44,8 +44,7 @@ export default function Message({ id, text, remoteFilepath, isOnline, saveHandle
                     value={message}
                     onChange={onMessageChange} />
             </td>
-            <td onMouseLeave={() => previewStateHandler(false, "")}
-                onMouseOver={() => previewStateHandler(true, url)}>
+            <td>
                 <input
                     type="url"
                     disabled={isDisabled}

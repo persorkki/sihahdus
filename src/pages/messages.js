@@ -31,12 +31,6 @@ export default function Loader({ messageData }) {
 function Messages({ messageData }) {
 
     const [messages, setMessages] = useState(messageData);
-    //TODO: possibly unneeded, need to figure out the preview thing 
-    const previewStateHandler = (show, url) => {
-        if (show && url != null && url != "") {
-            return;
-        }
-    }
 
     async function updateMessage(id, text, remoteFilepath, isOnline) {
         const messageObject = {
@@ -76,7 +70,7 @@ function Messages({ messageData }) {
 
     async function deleteMessage(id, text, remoteFilepath, isOnline) {
         if (id == 0) return;
-
+        console.log(id);
         const messageObject = {
             id,
             text,
@@ -96,7 +90,6 @@ function Messages({ messageData }) {
     return (
 
         <>
-            {/*{previewState.show && <Image className={styles.preview} src={previewState.url} alt="preview image" width={100} height={100} />}*/}
             <table className={styles.messageTable}>
                 <thead>
                     <tr className={styles.newMessage}>
@@ -117,7 +110,6 @@ function Messages({ messageData }) {
                         remoteFilepath=""
                         isOnline={false}
                         saveHandler={saveMessage}
-                        previewStateHandler={previewStateHandler}
                     />
                     {
                         messages.slice(0).reverse().map((e) => {
@@ -131,8 +123,6 @@ function Messages({ messageData }) {
                                     isOnline={e.isOnline}
                                     saveHandler={updateMessage}
                                     deleteHandler={deleteMessage}
-                                    previewStateHandler={previewStateHandler}
-
                                 />
                             );
                         })
