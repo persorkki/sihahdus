@@ -3,7 +3,8 @@ import prisma from "../../lib/prisma"
 export default async function handler(req, res) {
 
     if (req.method === 'GET') {
-        return res.status(405).json({ message: "no GET requests" })
+        const data = await prisma.message.findMany()
+        return res.status(200).json({ data })
     }
 
     //TODO: idiomatic nextjs would probably be dynamic routing /api/message/[id]
@@ -30,8 +31,7 @@ export default async function handler(req, res) {
                 id: data.id
             }
         })
-
     }
 
-    return res.status(200).json({ message: "hello" })
+    return res.status(200).end();
 }

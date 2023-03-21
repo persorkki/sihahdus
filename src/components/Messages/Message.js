@@ -1,26 +1,30 @@
 import { useState } from "react";
-export default function Message({ id, text, remoteFilepath, isOnline, saveHandler, deleteHandler, className }) {
 
+export default function Message({ isCreateNewInput, id, text, remoteFilepath, isOnline, createHandler, deleteHandler, updateHandler, className }) {
     const [onlineStatus, setOnlineStatus] = useState(isOnline);
     const [message, setMessage] = useState(text);
     const [url, setURL] = useState(remoteFilepath);
-    const [isDisabled, setIsDisabled] = useState(id == 0 ? false : true);
+    const [isDisabled, setIsDisabled] = useState(isCreateNewInput ? false : true);
 
+        
     const clearFields = () => {
         setMessage("");
         setURL("");
         setOnlineStatus(false);
     }
 
-    const onSave = () => {
-        id == 0 ? "" : setIsDisabled(true)
-        saveHandler(id, message, url, onlineStatus)
-        if (!deleteHandler) {
-            clearFields();
-        }
+    const onCreate = () => {
+        //saveHandler(id, message, url, onlineStatus)
+        createHandler(message, url, onlineStatus)
+        clearFields();
     }
     const onDelete = () => {
         deleteHandler(id, message, url, onlineStatus)
+    }
+    const onUpdate = () => {
+        // disable the inputs after save
+        setIsDisabled(true)
+        updateHandler(id, message, url, onlineStatus)
     }
 
     const onMessageChange = (e) => {
@@ -42,7 +46,7 @@ export default function Message({ id, text, remoteFilepath, isOnline, saveHandle
                     type="text"
                     disabled={isDisabled}
                     value={message}
-                    onChange={onMessageChange} />
+                    onChange={(onMessageChange)} />
             </td>
             <td>
                 <input
@@ -55,15 +59,18 @@ export default function Message({ id, text, remoteFilepath, isOnline, saveHandle
             <td><input type="radio" disabled={isDisabled} name={`status__${id}`} value="offline" checked={!onlineStatus} onChange={onRadioChange} /></td>
             <td>
                 {
-                    isDisabled ?
-                        <button onClick={() => setIsDisabled(false)}>unlock</button> :
-                        <button onClick={onSave}>{id == 0 ? "create" : "save"}</button>
+                    //TODO: extract these buttons into new components?
+                    isCreateNewInput ?
+                        <button onClick={onCreate}>create</button> :
+                        isDisabled ?
+                            <button onClick={() => setIsDisabled(false)}>edit</button> :
+                            <button onClick={onUpdate}>save</button>
                 }
             </td>
             <td>
                 {
-                    id == 0 ?
-                        <button style={{ visibility: "hidden" }} >delete</button> :
+                    isCreateNewInput ?
+                        <button style={{ visibility: "hidden" }}>delete</button> :
                         <button style={isDisabled ? { visibility: "hidden" } : { visibility: "visible" }} onClick={onDelete}>delete</button>
                 }
 
