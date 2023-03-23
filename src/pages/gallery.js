@@ -27,28 +27,9 @@ export async function getServerSideProps() {
 }
 
 export default function Gallery({ imageData }) {
-  /*
-  const copyImageToClipboard = (target) => {
-    navigator.clipboard.writeText(target);
-    console.log(target);
-  };
-  */
-
-  /* localhost is setup in next.config.js as domain */
-  const galleryLoader = ({ src, quality }) => `${src}?q=${quality || 50}`;
-
-  /*
-  const [copyText, setCopyText] = useState("clicking")
-
-  useEffect(() => {
-    window.addEventListener('resize', () => {
-      if (window.innerWidth < 700)
-        setCopyText("touching");
-      else
-        setCopyText("clicking");
-    })
-  }, [])
-  */
+  const handleVideoClick = (e) => {
+    window.open(e.target.dataset.url);
+  }
   return (
     <>
       <Head>
@@ -57,11 +38,36 @@ export default function Gallery({ imageData }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/sihahdus.ico" />
       </Head>
+
       <main className={`${home.content} ${styles.content}`}>
         <div className={styles.gallery}>
           {imageData.map((e) => (
-            <div key={e.id} className={styles.galleryImage}>
-              <Image loader={galleryLoader} key={e.id} className={styles.image} src={`/${e.filename}`} width={100} height={100} alt={e.filename} />
+            <div key={e.id} className={styles.galleryImage} onClick={handleVideoClick}>
+              {
+                e.filename.endsWith(".gif") ? (
+                  <video
+                    autoPlay
+                    loop muted
+                    playsInline
+                    data-url={e.filename}
+                    key={e.id}
+                    >
+                    <source
+                      type="video/webm"
+                      /* TODO: the webm path should be in the db
+                      this whole page needs a rework */
+                      src={`/${e.filename.split(".")[0] + ".webm"}`} />
+                  </video>
+                ) : (
+                    <Image key={e.id}
+                      className={styles.image}
+                      src={`/${e.filename}`}
+                      width={100} height={100}
+                      alt={e.filename}
+                      data-url={e.filename}/>
+                )
+              }
+
             </div>
           ))
           }
