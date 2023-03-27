@@ -1,6 +1,6 @@
 // next imports
 import Head from 'next/head';
-import Image from 'next/image';
+//import Image from 'next/image';
 // styles
 import home from '../styles/Home.module.scss';
 import styles from '../styles/Gallery.module.scss';
