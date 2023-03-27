@@ -16,7 +16,7 @@ export async function getServerSideProps() {
   const imageData = await prisma.file.findMany({
     where: {
       mime: {
-        startsWith: "image"
+        startsWith: "image/gif"
       }
     }
   })
@@ -41,16 +41,14 @@ export default function Gallery({ imageData }) {
 
       <main className={`${home.content} ${styles.content}`}>
         <div className={styles.gallery}>
-          {imageData.map((e) => (
+          { imageData.map((e) => (
             <div key={e.id} className={styles.galleryImage} onClick={handleVideoClick}>
               {
-                e.filename.endsWith(".gif") ? (
                   <video
                     autoPlay
                     loop muted
                     playsInline
                     data-url={e.filename}
-                    key={e.id}
                     >
                     <source
                       type="video/webm"
@@ -58,21 +56,11 @@ export default function Gallery({ imageData }) {
                       this whole page needs a rework */
                       src={`/${e.filename.split(".")[0] + ".webm"}`} />
                   </video>
-                ) : (
-                    <Image key={e.id}
-                      className={styles.image}
-                      src={`/${e.filename}`}
-                      width={100} height={100}
-                      alt={e.filename}
-                      data-url={e.filename}/>
-                )
               }
-
             </div>
           ))
           }
         </div>
-
       </main>
     </>
   );
